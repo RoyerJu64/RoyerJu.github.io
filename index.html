@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Julien Royer — AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #faf8f4;
+  --bg2:      #f3f0e8;
+  --bg3:      #ede9df;
+  --ink:      #1e1c17;
+  --ink2:     #4a4740;
+  --ink3:     #8a857a;
+  --sand:     #c9bfa8;
+  --border:   #e2ddd4;
+  --border2:  #cec8bc;
+  --rust:     #b85c38;
+  --rust-lt:  #f7ece6;
+  --forest:   #3a5c45;
+  --forest-lt:#e8f0eb;
+  --sky:      #3b5f8a;
+  --sky-lt:   #e8eef5;
+  --gold:     #a07c3a;
+  --gold-lt:  #f5eddb;
+  --serif:    'Lora', Georgia, serif;
+  --sans:     'DM Sans', system-ui, sans-serif;
+  --radius:   10px;
+  --max:      1140px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 max(1.5rem, 5vw);
+  height: 60px;
+  background: rgba(250,248,244,0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+}
+.nav-logo span { color: var(--rust); }
+.nav-links {
+  display: flex;
+  gap: 1.75rem;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink3);
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--rust); }
+.nav-cta {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--rust) !important;
+  border: 1px solid var(--rust);
+  padding: 0.3rem 0.9rem;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s !important;
+}
+.nav-cta:hover { background: var(--rust) !important; color: #fff !important; }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 80px max(1.5rem, 8vw) 60px;
+  max-width: var(--max);
+  margin: 0 auto;
+  gap: 5vw;
+}
+.hero-left { flex: 1.1; }
+.hero-right { flex: 0.9; display: flex; justify-content: flex-end; align-items: center; }
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 1.5rem;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 28px; height: 1.5px;
+  background: var(--rust);
+  border-radius: 2px;
+}
+h1.hero-name {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 6.5vw, 5rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+h1.hero-name em {
+  font-style: italic;
+  color: var(--rust);
+}
+.hero-bio {
+  font-size: 1.05rem;
+  color: var(--ink2);
+  font-weight: 300;
+  max-width: 520px;
+  margin-bottom: 2.5rem;
+  line-height: 1.8;
+}
+.hero-bio strong { font-weight: 500; color: var(--ink); }
+.hero-actions {
+  display: flex;
+  gap: 0.875rem;
+  flex-wrap: wrap;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+}
+.btn-rust {
+  background: var(--rust);
+  color: #fff;
+  border: 1.5px solid var(--rust);
+}
+.btn-rust:hover { background: #9e4d2e; border-color: #9e4d2e; }
+.btn-outline {
+  background: transparent;
+  color: var(--ink2);
+  border: 1.5px solid var(--border2);
+}
+.btn-outline:hover { border-color: var(--ink3); color: var(--ink); }
+
+/* hero card */
+.hero-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2.25rem 2rem;
+  max-width: 340px;
+  width: 100%;
+}
+.hero-avatar {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--rust-lt);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--rust);
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+}
+.hero-card-name {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.2rem;
+}
+.hero-card-role {
+  font-size: 12px;
+  color: var(--rust);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.hero-card-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0 0 1.5rem;
+}
+.hero-card-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 13px;
+}
+.hero-card-row:last-child { margin-bottom: 0; }
+.hero-card-icon {
+  width: 30px; height: 30px;
+  border-radius: 7px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.hero-card-info { line-height: 1.4; }
+.hero-card-info strong { display: block; font-weight: 500; color: var(--ink); font-size: 13px; }
+.hero-card-info span { color: var(--ink3); font-size: 12px; }
+.status-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--forest);
+  background: var(--forest-lt);
+  border: 1px solid #b8d5c2;
+  padding: 0.25rem 0.7rem;
+  border-radius: 20px;
+  margin-top: 1.5rem;
+}
+.status-dot::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--forest);
+  animation: pulse-green 2s ease-in-out infinite;
+}
+@keyframes pulse-green {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(0.7); }
+}
+
+/* ── SECTION SHARED ── */
+.section-wrap {
+  padding: 100px max(1.5rem, 6vw);
+}
+.section-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+.section-header {
+  margin-bottom: 3.5rem;
+}
+.label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 0.6rem;
+  display: block;
+}
+h2.section-title {
+  font-family: var(--serif);
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+}
+.section-subtitle {
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  color: var(--ink3);
+  font-weight: 300;
+  max-width: 600px;
+  line-height: 1.75;
+}
+.stripe { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+/* ── STORY SECTION ── */
+#story .story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+.story-text p {
+  color: var(--ink2);
+  font-weight: 300;
+  margin-bottom: 1.1rem;
+  font-size: 1rem;
+}
+.story-text p strong { font-weight: 500; color: var(--ink); }
+.pull-quote {
+  margin: 2rem 0;
+  padding: 1.25rem 1.5rem;
+  border-left: 3px solid var(--rust);
+  background: var(--rust-lt);
+  border-radius: 0 8px 8px 0;
+}
+.pull-quote p {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--rust) !important;
+  margin-bottom: 0 !important;
+  line-height: 1.65;
+}
+.interest-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 400;
+  border: 1px solid var(--border2);
+  color: var(--ink2);
+  background: var(--bg);
+  transition: all 0.2s;
+}
+.pill:hover { border-color: var(--rust); color: var(--rust); }
+.pill-rust  { background: var(--rust-lt); border-color: #deb4a4; color: var(--rust); }
+.pill-forest{ background: var(--forest-lt); border-color: #b8d5c2; color: var(--forest); }
+.pill-sky   { background: var(--sky-lt); border-color: #b5cae0; color: var(--sky); }
+.pill-gold  { background: var(--gold-lt); border-color: #d4bc84; color: var(--gold); }
+
+.story-aside { display: flex; flex-direction: column; gap: 1rem; }
+.aside-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  transition: border-color 0.2s, transform 0.2s;
+  cursor: default;
+}
+.aside-card:hover { border-color: var(--border2); transform: translateX(4px); }
+.aside-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+.aside-card-num {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--rust);
+}
+.aside-card-icon { font-size: 20px; }
+.aside-card-title { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 0.2rem; }
+.aside-card-sub { font-size: 12px; color: var(--ink3); line-height: 1.5; }
+
+/* ── JOURNEY ── */
+#journey .timeline { position: relative; padding-left: 28px; }
+#journey .timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px; top: 10px; bottom: 0;
+  width: 1.5px;
+  background: linear-gradient(to bottom, var(--rust), var(--sand), transparent);
+}
+.tl-item {
+  position: relative;
+  margin-bottom: 3rem;
+}
+.tl-item:last-child { margin-bottom: 0; }
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -25px; top: 8px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--rust);
+  transition: background 0.2s;
+  z-index: 1;
+}
+.tl-item:hover::before { background: var(--rust); }
+.tl-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+.tl-role {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.tl-date {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.tl-company {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--rust);
+  margin-bottom: 0.65rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tl-loc {
+  font-size: 11px;
+  color: var(--ink3);
+  font-weight: 400;
+}
+.tl-desc {
+  font-size: 14px;
+  color: var(--ink2);
+  font-weight: 300;
+  line-height: 1.75;
+  max-width: 680px;
+}
+.tl-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.875rem;
+}
+.chip {
+  font-size: 11px;
+  font-weight: 400;
+  padding: 0.2rem 0.65rem;
+  border-radius: 3px;
+  border: 1px solid var(--border2);
+  color: var(--ink3);
+  background: var(--bg2);
+  letter-spacing: 0.03em;
+}
+.chip-rust   { background: var(--rust-lt); border-color: #deb4a4; color: var(--rust); }
+.chip-forest { background: var(--forest-lt); border-color: #b8d5c2; color: var(--forest); }
+.chip-sky    { background: var(--sky-lt); border-color: #b5cae0; color: var(--sky); }
+.chip-gold   { background: var(--gold-lt); border-color: #d4bc84; color: var(--gold); }
+
+/* ── EDUCATION ── */
+#education .edu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+.edu-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.6rem;
+  transition: border-color 0.2s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.edu-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 0 0 var(--radius) var(--radius);
+  background: var(--rust);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.edu-card:hover { transform: translateY(-4px); border-color: var(--border2); }
+.edu-card:hover::after { transform: scaleX(1); }
+.edu-period {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 0.6rem;
+}
+.edu-school {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--rust);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.02em;
+}
+.edu-degree {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+  margin-bottom: 0.6rem;
+}
+.edu-spec { font-size: 13px; color: var(--ink3); font-weight: 300; line-height: 1.6; }
+.edu-badge {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+  border-radius: 3px;
+  background: var(--gold-lt);
+  border: 1px solid #d4bc84;
+  color: var(--gold);
+}
+
+/* ── SKILLS ── */
+#skills .skills-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem 5rem;
+  align-items: start;
+}
+.skill-block-title {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.skill-block-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.skill-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.skill-row:last-child { border-bottom: none; }
+.skill-label { font-size: 14px; color: var(--ink2); font-weight: 400; }
+.skill-track {
+  width: 100px;
+  height: 4px;
+  background: var(--bg3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.skill-fill {
+  height: 100%;
+  background: var(--rust);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.skill-fill.animated { transform: scaleX(1); }
+
+.lang-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+.lang-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.lang-flag { font-size: 18px; flex-shrink: 0; }
+.lang-info { flex: 1; }
+.lang-name { font-size: 14px; font-weight: 500; color: var(--ink); }
+.lang-level { font-size: 11px; color: var(--ink3); }
+.lang-dots {
+  display: flex;
+  gap: 4px;
+}
+.lang-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+}
+.lang-dot.on { background: var(--rust); border-color: var(--rust); }
+
+/* ── PROJECTS ── */
+#projects .proj-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+.proj-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.proj-card:hover {
+  border-color: var(--rust);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(184,92,56,0.08);
+}
+.proj-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 0.5rem;
+}
+.proj-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+.proj-desc {
+  font-size: 13.5px;
+  color: var(--ink2);
+  font-weight: 300;
+  line-height: 1.7;
+  flex: 1;
+  margin-bottom: 1.25rem;
+}
+.proj-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+.proj-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.proj-link {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--rust);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+  flex-shrink: 0;
+}
+.proj-link:hover { opacity: 0.65; }
+.proj-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.65rem;
+  border-radius: 20px;
+  margin-bottom: 1.1rem;
+}
+.ps-active  { background: var(--forest-lt); border: 1px solid #b8d5c2; color: var(--forest); }
+.ps-active::before { content:''; width:5px;height:5px;border-radius:50%;background:var(--forest);animation:pulse-green 2s infinite; }
+.ps-research{ background: var(--sky-lt); border: 1px solid #b5cae0; color: var(--sky); }
+.ps-academic{ background: var(--gold-lt); border: 1px solid #d4bc84; color: var(--gold); }
+
+/* ── CONTACT ── */
+#contact .contact-box {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+.contact-intro {
+  font-size: 1.05rem;
+  color: var(--ink2);
+  font-weight: 300;
+  margin-bottom: 2.75rem;
+  line-height: 1.8;
+}
+.contact-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1.5px solid var(--border2);
+  color: var(--ink2);
+  background: var(--bg);
+  transition: all 0.2s;
+}
+.contact-btn:hover { border-color: var(--rust); color: var(--rust); background: var(--rust-lt); }
+.contact-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+.contact-email {
+  font-size: 13px;
+  color: var(--ink3);
+}
+.contact-email a { color: var(--rust); text-decoration: none; }
+.contact-email a:hover { text-decoration: underline; }
+.avail-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--forest-lt);
+  border: 1px solid #b8d5c2;
+  border-radius: 6px;
+  padding: 0.75rem 1.5rem;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--forest);
+  margin-bottom: 2.5rem;
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 1.75rem max(1.5rem, 5vw);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+footer p { font-size: 12px; color: var(--ink3); }
+footer a { color: var(--rust); text-decoration: none; font-weight: 500; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 820px) {
+  #hero { flex-direction: column; align-items: flex-start; padding-top: 100px; }
+  .hero-right { display: none; }
+  #story .story-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  #skills .skills-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .nav-links { display: none; }
+  .tl-head { flex-direction: column; gap: 0.2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Julien <span>Royer</span></span>
+  <ul class="nav-links">
+    <li><a href="#story">About</a></li>
+    <li><a href="#journey">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact" class="nav-cta">Say hello</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">AI Engineer &amp; Systems Researcher</div>
+    <h1 class="hero-name">
+      Building bridges<br>between <em>systems</em><br>and <em>intelligence.</em>
+    </h1>
+    <p class="hero-bio">
+      I'm Julien — a 23-year-old French engineer with a rare double degree in <strong>control systems</strong> and <strong>artificial intelligence</strong>. Currently at Thales Alenia Space, designing AI for industrial processes and space systems.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-rust">See my work →</a>
+      <a href="https://github.com/RoyerJu" target="_blank" class="btn btn-outline">GitHub ↗</a>
+      <a href="#contact" class="btn btn-outline">Get in touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-card">
+      <div class="hero-avatar">JR</div>
+      <div class="hero-card-name">Julien Royer</div>
+      <div class="hero-card-role">AI Engineer · Data Scientist</div>
+      <div class="hero-card-divider"></div>
+      <div class="hero-card-row">
+        <div class="hero-card-icon">🎓</div>
+        <div class="hero-card-info">
+          <strong>ENSIMAG + ENSE3</strong>
+          <span>Grenoble INP — Double degree</span>
+        </div>
+      </div>
+      <div class="hero-card-row">
+        <div class="hero-card-icon">🚀</div>
+        <div class="hero-card-info">
+          <strong>Thales Alenia Space</strong>
+          <span>Current position · Toulouse</span>
+        </div>
+      </div>
+      <div class="hero-card-row">
+        <div class="hero-card-icon">🌍</div>
+        <div class="hero-card-info">
+          <strong>FR / EN / ES</strong>
+          <span>Trilingual · Driver's licence</span>
+        </div>
+      </div>
+      <div class="hero-card-row">
+        <div class="hero-card-icon">🏉</div>
+        <div class="hero-card-info">
+          <strong>Rugby player — R1</strong>
+          <span>GUC SMH · Grenoble</span>
+        </div>
+      </div>
+      <div class="status-dot">Available from mid-August 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY / ABOUT -->
+<section id="story" class="section-wrap stripe">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="label">About me</span>
+      <h2 class="section-title">A profile built at the crossroads</h2>
+      <p class="section-subtitle">Two schools, three countries, one clear direction — toward AI systems that are both rigorous and meaningful.</p>
+    </div>
+    <div class="story-grid">
+      <div class="story-text reveal">
+        <p>My path started in Bordeaux with two intense years of <strong>classes préparatoires</strong> in Maths and Physics. That foundation launched me to Grenoble INP, where I'm completing a double degree that most engineers never attempt: a <strong>Diplôme d'Ingénieur from ENSE3</strong> in Intelligent Systems, coupled with an <strong>M2 in Artificial Intelligence from ENSIMAG</strong>.</p>
+        <p>The combination is unusual — and intentional. Systems engineers know how hardware constraints shape every algorithm. AI researchers know how to push those algorithms further. I operate in both worlds, and I believe that's where the most interesting problems live: at the boundary between the two.</p>
+        <div class="pull-quote">
+          <p>"My INRIA internship placed me at the intersection of pure numerical mathematics and high-performance computing — exactly the kind of challenge that sharpens both sides of that double profile."</p>
+        </div>
+        <p>After a semester at <strong>McMaster University in Canada 🇨🇦</strong>, a research stint at INRIA, and now designing LLM pipelines at <strong>Thales Alenia Space</strong>, I'm as comfortable writing CUDA kernels as I am structuring a document analysis chain for industrial decision support.</p>
+        <p>Outside the terminal: I play rugby at the <strong>first division level (R1)</strong> with GUC SMH in Grenoble, I hike in the mountains whenever the weekends allow, and I was VP of the ENSE3 Rugby Association for two years. I think the best engineers are trained by adversity — on the pitch as much as in the debugger.</p>
+        <div class="interest-pills">
+          <span class="pill pill-rust">Machine Learning</span>
+          <span class="pill pill-rust">LLMs &amp; GenAI</span>
+          <span class="pill pill-sky">HPC &amp; CUDA</span>
+          <span class="pill pill-sky">Numerical Methods</span>
+          <span class="pill pill-forest">Control Theory</span>
+          <span class="pill">Rugby — R1</span>
+          <span class="pill">Haute montagne</span>
+          <span class="pill pill-gold">Œnologie</span>
+        </div>
+      </div>
+      <div class="story-aside reveal">
+        <div class="aside-card">
+          <div class="aside-card-top">
+            <div class="aside-card-num">2×</div>
+            <div class="aside-card-icon">🎓</div>
+          </div>
+          <div class="aside-card-title">Engineering degrees in progress</div>
+          <div class="aside-card-sub">ENSE3 (Intelligent Systems) + ENSIMAG (M2 AI) — simultaneously</div>
+        </div>
+        <div class="aside-card">
+          <div class="aside-card-top">
+            <div class="aside-card-num">3</div>
+            <div class="aside-card-icon">🗣️</div>
+          </div>
+          <div class="aside-card-title">Languages spoken fluently</div>
+          <div class="aside-card-sub">French (native) · English C1 Cambridge · Spanish C1</div>
+        </div>
+        <div class="aside-card">
+          <div class="aside-card-top">
+            <div class="aside-card-num">🇨🇦</div>
+            <div class="aside-card-icon"></div>
+          </div>
+          <div class="aside-card-title">International exchange semester</div>
+          <div class="aside-card-sub">McMaster University — Hamilton, Ontario, Canada (Jan–May 2025)</div>
+        </div>
+        <div class="aside-card">
+          <div class="aside-card-top">
+            <div class="aside-card-num">R1</div>
+            <div class="aside-card-icon">🏉</div>
+          </div>
+          <div class="aside-card-title">Rugby division</div>
+          <div class="aside-card-sub">Player at GUC SMH · Former VP, ENSE3 Rugby Association 2023–2025</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY / EXPERIENCE -->
+<section id="journey" class="section-wrap">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="label">Experience</span>
+      <h2 class="section-title">A journey across industry &amp; research</h2>
+      <p class="section-subtitle">From chemical engineering to space systems — each step deepened the bridge between physical constraints and intelligent solutions.</p>
+    </div>
+    <div class="timeline">
+
+      <div class="tl-item reveal">
+        <div class="tl-head">
+          <span class="tl-role">AI Engineer &amp; Data Scientist</span>
+          <span class="tl-date">Feb 2026 — Aug 2026</span>
+        </div>
+        <div class="tl-company">
+          Thales Alenia Space
+          <span class="tl-loc">· Toulouse, France 🚀</span>
+        </div>
+        <p class="tl-desc">Designing end-to-end AI solutions for Integration, Validation and Qualification (IVQ) processes in space systems. Building ML and deep learning models for complex industrial data. Implementing Generative AI and LLM pipelines for technical document analysis, automated synthesis, and decision support — where the stakes of getting it right are quite literally out of this world.</p>
+        <div class="tl-tags">
+          <span class="chip chip-rust">LLMs &amp; RAG</span>
+          <span class="chip chip-rust">GenAI</span>
+          <span class="chip">Deep Learning</span>
+          <span class="chip chip-sky">Industrial ML</span>
+          <span class="chip chip-sky">Space Systems</span>
+          <span class="chip">Python · PyTorch</span>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-head">
+          <span class="tl-role">Research Intern — Numerical Methods</span>
+          <span class="tl-date">Jun 2025 — Sep 2025</span>
+        </div>
+        <div class="tl-company">
+          INRIA
+          <span class="tl-loc">· Pau, France 🔬</span>
+        </div>
+        <p class="tl-desc">Analysed and implemented Discontinuous Galerkin (DG) formulations on pyramid-type meshes — a mathematically demanding problem at the frontier of numerical simulation. Conducted literature review, derived the method variants, integrated them into the open-source HPC codebase <strong>GEOS</strong>, and authored the technical documentation. A research experience that sharpened both my theoretical rigour and my ability to contribute to large collaborative codebases.</p>
+        <div class="tl-tags">
+          <span class="chip chip-forest">Research</span>
+          <span class="chip">DG Methods</span>
+          <span class="chip chip-sky">HPC</span>
+          <span class="chip">C++ · GEOS</span>
+          <span class="chip chip-gold">Open Source</span>
+        </div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-head">
+          <span class="tl-role">Engineering Intern</span>
+          <span class="tl-date">May 2023 — Jun 2023</span>
+        </div>
+        <div class="tl-company">
+          SOFRESID Engineering
+          <span class="tl-loc">· Pau, France 🏭</span>
+        </div>
+        <p class="tl-desc">Wrote calculation methods and sizing programs for valve engineering, applied to live Chemical industry projects. First professional experience with real industrial constraints, norms, and the gap between textbook and field engineering.</p>
+        <div class="tl-tags">
+          <span class="chip">Engineering Calculations</span>
+          <span class="chip chip-gold">Chemical Industry</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="section-wrap stripe">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="label">Education</span>
+      <h2 class="section-title">Built on solid foundations</h2>
+      <p class="section-subtitle">Two years of intensive preparatory classes, then an ambitious double-degree path — plus a semester abroad.</p>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-period">Since September 2025</div>
+        <div class="edu-school">Grenoble INP — ENSIMAG</div>
+        <div class="edu-degree">Master of Artificial Intelligence (M2)</div>
+        <div class="edu-spec">Foundations &amp; Advanced Methods in ML · GPU computing · Generative AI · Mathematical optimisation · AI ethics</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-period">Since September 2023</div>
+        <div class="edu-school">Grenoble INP — ENSE3</div>
+        <div class="edu-degree">Diplôme d'Ingénieur</div>
+        <div class="edu-spec">Automatique &amp; Systèmes Intelligents · Cyber-physical systems · Control &amp; supervision · Performance optimisation</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-period">January – May 2025</div>
+        <div class="edu-school">McMaster University</div>
+        <div class="edu-degree">International Exchange Semester</div>
+        <div class="edu-spec">OOP · Numerical Methods · Advanced Control Theory · Electronics &amp; Instrumentation · Marketing</div>
+        <div class="edu-badge">🇨🇦 Hamilton, Canada</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-period">September 2021 – June 2023</div>
+        <div class="edu-school">La Prépa des INP — Bordeaux</div>
+        <div class="edu-degree">Classes Préparatoires</div>
+        <div class="edu-spec">Majors: Mathematics &amp; Physics · Foundation for competitive engineering entrance exams</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="section-wrap">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="label">Skills</span>
+      <h2 class="section-title">Technical toolbox</h2>
+    </div>
+    <div class="skills-layout">
+      <div class="reveal">
+        <div class="skill-block-title">Programming languages</div>
+        <div class="skill-row"><span class="skill-label">Python</span><div class="skill-track"><div class="skill-fill" style="width:95%"></div></div></div>
+        <div class="skill-row"><span class="skill-label">C / C++</span><div class="skill-track"><div class="skill-fill" style="width:80%"></div></div></div>
+        <div class="skill-row"><span class="skill-label">CUDA</span><div class="skill-track"><div class="skill-fill" style="width:70%"></div></div></div>
+        <div class="skill-row"><span class="skill-label">Matlab</span><div class="skill-track"><div class="skill-fill" style="width:82%"></div></div></div>
+        <div class="skill-row"><span class="skill-label">Java</span><div class="skill-track"><div class="skill-fill" style="width:65%"></div></div></div>
+        <div class="skill-row"><span class="skill-label">Bash / Linux</span><div class="skill-track"><div class="skill-fill" style="width:75%"></div></div></div>
+      </div>
+      <div class="reveal">
+        <div class="skill-block-title">AI &amp; Machine Learning</div>
+        <div class="skill-row"><span class="skill-label">PyTorch</span><div class="skill-track"><div class="skill-fill" style="width:85%"></div></div></div>
+        <div class="skill-row"><span class="skill-label">LLMs &amp; RAG architectures</span><div class="skill-track"><div class="skill-fill" style="width:80%"></div></div></div>
+        <div class="skill-row"><span class="skill-label">Deep Learning</span><div class="skill-track"><div class="skill-fill" style="width:82%"></div></div></div>
+        <div class="skill-row"><span class="skill-label">ML theory &amp; optimisation</span><div class="skill-track"><div class="skill-fill" style="width:85%"></div></div></div>
+        <div class="skill-row"><span class="skill-label">Generative AI</span><div class="skill-track"><div class="skill-fill" style="width:78%"></div></div></div>
+      </div>
+      <div class="reveal">
+        <div class="skill-block-title">Systems &amp; HPC</div>
+        <div class="skill-row"><span class="skill-label">OpenMP / MPI</span><div class="skill-track"><div class="skill-fill" style="width:78%"></div></div></div>
+        <div class="skill-row"><span class="skill-label">Docker &amp; CMake</span><div class="skill-track"><div class="skill-fill" style="width:70%"></div></div></div>
+        <div class="skill-row"><span class="skill-label">Control theory</span><div class="skill-track"><div class="skill-fill" style="width:85%"></div></div></div>
+        <div class="skill-row"><span class="skill-label">Numerical methods (DG)</span><div class="skill-track"><div class="skill-fill" style="width:72%"></div></div></div>
+      </div>
+      <div class="reveal">
+        <div class="skill-block-title">Languages</div>
+        <div class="lang-grid">
+          <div class="lang-item">
+            <span class="lang-flag">🇫🇷</span>
+            <div class="lang-info"><div class="lang-name">French</div><div class="lang-level">Native</div></div>
+            <div class="lang-dots"><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div></div>
+          </div>
+          <div class="lang-item">
+            <span class="lang-flag">🇬🇧</span>
+            <div class="lang-info"><div class="lang-name">English</div><div class="lang-level">Fluent — C1 Cambridge</div></div>
+            <div class="lang-dots"><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot"></div></div>
+          </div>
+          <div class="lang-item">
+            <span class="lang-flag">🇪🇸</span>
+            <div class="lang-info"><div class="lang-name">Spanish</div><div class="lang-level">Advanced — C1</div></div>
+            <div class="lang-dots"><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot on"></div><div class="lang-dot"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="section-wrap stripe">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="label">Selected work</span>
+      <h2 class="section-title">Projects &amp; research</h2>
+      <p class="section-subtitle">A sample of what I've been building — from space industry AI pipelines to open-source HPC research.</p>
+    </div>
+    <div class="proj-grid">
+
+      <div class="proj-card reveal">
+        <div class="proj-label">Industrial AI · Aerospace</div>
+        <div class="proj-status ps-active">Ongoing</div>
+        <div class="proj-title">LLM Pipeline for Space System Qualification</div>
+        <p class="proj-desc">End-to-end Generative AI system for automated technical document analysis and decision support within IVQ processes at Thales Alenia Space. Combines RAG architecture with domain-adapted models tailored to aerospace industrial data constraints.</p>
+        <div class="proj-footer">
+          <div class="proj-tags">
+            <span class="chip chip-rust">LLM</span>
+            <span class="chip chip-rust">RAG</span>
+            <span class="chip chip-sky">Aerospace</span>
+          </div>
+          <span class="proj-link" style="color:var(--ink3);cursor:default;font-style:italic;font-size:11px">confidential</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-label">Research · HPC · Open Source</div>
+        <div class="proj-status ps-research">Research</div>
+        <div class="proj-title">DG Methods on Pyramid Meshes — INRIA / GEOS</div>
+        <p class="proj-desc">Research implementation of Discontinuous Galerkin formulations on pyramid-type elements. Literature review, mathematical derivation of DG schemes, C++ integration into the open-source GEOS simulator, and full technical documentation authored from scratch.</p>
+        <div class="proj-footer">
+          <div class="proj-tags">
+            <span class="chip chip-sky">C++</span>
+            <span class="chip chip-sky">HPC</span>
+            <span class="chip chip-gold">Open Source</span>
+          </div>
+          <a href="https://github.com/RoyerJu" target="_blank" class="proj-link">GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-label">AI/ML · Systems</div>
+        <div class="proj-status ps-academic">Academic</div>
+        <div class="proj-title">GPU-Accelerated ML with CUDA &amp; PyTorch</div>
+        <p class="proj-desc">Deep practical experience with GPU computation — from low-level CUDA kernel optimisation to PyTorch training pipelines. Focus on data processing throughput for large-scale learning workloads, studied at ENSIMAG.</p>
+        <div class="proj-footer">
+          <div class="proj-tags">
+            <span class="chip chip-rust">CUDA</span>
+            <span class="chip chip-rust">PyTorch</span>
+            <span class="chip">Python</span>
+          </div>
+          <a href="https://github.com/RoyerJu" target="_blank" class="proj-link">GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-label">Systems · Parallel Computing</div>
+        <div class="proj-status ps-academic">Academic</div>
+        <div class="proj-title">Parallel &amp; Distributed HPC Systems</div>
+        <p class="proj-desc">Projects combining OpenMP, MPI, and GPU architectures for large-scale parallel computation. Multi-core and multi-node optimisation strategies applied to numerical simulation and ML workloads — bridging systems-level thinking with AI performance.</p>
+        <div class="proj-footer">
+          <div class="proj-tags">
+            <span class="chip chip-sky">OpenMP</span>
+            <span class="chip chip-sky">MPI</span>
+            <span class="chip chip-forest">HPC</span>
+          </div>
+          <a href="https://github.com/RoyerJu" target="_blank" class="proj-link">GitHub ↗</a>
+        </div>
+      </div>
+
+    </div>
+    <p class="reveal" style="margin-top:2rem;font-size:13px;color:var(--ink3)">
+      More on <a href="https://github.com/RoyerJu" target="_blank" style="color:var(--rust);text-decoration:none;font-weight:500">github.com/RoyerJu →</a>
+    </p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section-wrap">
+  <div class="section-inner">
+    <div class="contact-box">
+      <div class="reveal">
+        <span class="label" style="display:block;text-align:center">Contact</span>
+        <h2 class="section-title" style="text-align:center;margin-bottom:1rem">Let's work together</h2>
+      </div>
+      <p class="contact-intro reveal">
+        I'm looking for my next challenge starting mid-August 2026 — whether that's a research role, an AI engineering position, or something at the intersection of both. I'm mobile, trilingual, and genuinely excited by hard problems.
+      </p>
+      <div class="avail-banner reveal">
+        ✦ Available from mid-August 2026 · Open to relocation
+      </div>
+      <div class="contact-links reveal">
+        <a href="mailto:Julien.Royer1@grenobleinp.org" class="contact-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,8 12,14 22,8"/></svg>
+          Send an email
+        </a>
+        <a href="https://github.com/RoyerJu" target="_blank" class="contact-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          GitHub
+        </a>
+        <a href="https://linkedin.com/in/julien-royer" target="_blank" class="contact-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+      <p class="contact-email reveal">Or write directly to <a href="mailto:Julien.Royer1@grenobleinp.org">Julien.Royer1@grenobleinp.org</a></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Julien Royer — <a href="https://github.com/RoyerJu" target="_blank">github.com/RoyerJu</a></p>
+  <p>Pau · Grenoble · Toulouse 🇫🇷</p>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      // Animate skill bars
+      e.target.querySelectorAll('.skill-fill').forEach(f => f.classList.add('animated'));
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Also trigger skill fills when parent becomes visible
+document.querySelectorAll('.skill-fill').forEach(f => {
+  const parent = f.closest('.reveal');
+  if (!parent) f.classList.add('animated');
+});
+</script>
+</body>
+</html>
