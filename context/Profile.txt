@@ -1,0 +1,41 @@
+=== JULIEN ROYER — PROFILE (always loaded) ===
+
+IDENTITY
+Julien Royer, 23, French AI Engineer based in Pau / Toulouse, France.
+Currently: AI Engineer at Thales Alenia Space (Feb 2026 – Aug 2026), Toulouse.
+Trilingual: French (native), English (Fluent, C1 Cambridge), Spanish (Advanced, C1).
+Fields of interest: Agentic AI, Applied Machine Learning, Computer Vision.
+Contact: Julien.Royer1@grenobleinp.org (academic), royerjulien64@gmail.com (personal).
+LinkedIn: https://www.linkedin.com/in/julien-royer-228251253/
+GitHub: https://github.com/royerju64
+
+ONE-LINE PITCH
+Double-degree engineer bridging Intelligent Systems Engineering (ENSE3) and a research-oriented Master in Artificial Intelligence (ENSIMAG), focused on the theoretical foundations of machine learning and their integration into complex industrial environments — including training optimization and deployment in application pipelines.
+
+EDUCATION
+- Master of Artificial Intelligence (M2), Grenoble INP – ENSIMAG, 2025–2026. "Foundations and Advanced Methods in Machine Learning." Courses: foundations & advanced ML methods, GPU computing, generative AI, mathematical optimisation, AI ethics. GPA equivalent: 15.5/20.
+- Engineering Degree, Grenoble INP – ENSE3, 2023–2026. Automation & Intelligent Systems track: cyber-physical systems, control & supervision, diagnostics, performance analysis & optimisation, engineering project management.
+- International Exchange Semester, McMaster University (Hamilton, Ontario, Canada), 2025. OOP, modelling & numerical solutions, advanced control theory, electronics & instrumentation, marketing.
+- Preparatory Classes (CPGE), La Prépa des INP, Bordeaux, 2021–2023. Mathematics, Physics, Engineering Science.
+
+PROFESSIONAL EXPERIENCE
+1. AI Engineer — Thales Alenia Space (Feb–Aug 2026, Toulouse). Designed end-to-end AI solutions for Integration, Validation and Qualification (IVQ) processes in space systems. Implemented Agentic Generative AI pipelines for technical document analysis and generation, automated synthesis, and decision support. The system was deployed across several engineering services and teams, and its backend was taken over by the AI department to be turned into a finished industrial product. Keywords: Generative AI, LLM Agents, Industrial AI, DevOps, Space Systems.
+2. Research Intern (Numerical Methods) — INRIA (Jun–Sep 2025, Pau). Discontinuous Galerkin methods on pyramid meshes, integrated into the open-source HPC code GEOS. Keywords: Research, Applied Mathematics, HPC, Numerical Methods, Open Source. [Full report available.]
+3. Engineering Intern — SOFRESID Engineering (May–Jun 2023, Pau). Calculation methods and sizing programs for safety-valve engineering in the chemical industry; process simulations with ASPEN HYSYS.
+
+SKILLS
+- AI / ML: agentic systems, RAG, LLM fine-tuning, training & inference optimization, deep learning, generative AI, computer vision, reinforcement learning.
+- Scientific computing: Python, PyTorch, NumPy, CUDA, Matlab.
+- HPC / low-level: C, C++, CUDA, OpenMP, MPI, parallel & distributed computing, performance profiling.
+- Software & dev: software architecture, Docker, CI/CD, databases, Git, CMake, testing.
+- Infra & systems: Linux, Bash, GPU computing, deployment pipelines.
+
+PROJECTS (short summaries — full reports exist for the ones marked)
+- KYM — Multi-Agent System for Knowledge Retrieval, Synthesis & Generation (Thales, CONFIDENTIAL). Proprietary multi-agent system for complex engineering tasks over dense aerospace/industrial documentation. Technical core: agentic loop for task decomposition and tool execution, with an advanced hybrid RAG pipeline (Multi-Query + HyDE expansion, parallel vector and BM25 search, RRF fusion, final reranking). Other use cases: automated technical documentation generation, and a failure-segmentation agent parsing logs to isolate complex system faults. NOTE: confidential — no public report or code; details beyond this summary cannot be shared.
+- Discontinuous Galerkin Methods on Pyramid Meshes — INRIA / GEOS (Research). [Full report available.] Linked: GEOS repo (https://github.com/GEOS-DEV/GEOS) and pull request #3793.
+- GPU-Accelerated Particle Simulation (Academic). [Full report available.] CUDA 2D particle/fluid simulator based on a personal C++ Verlet-integration project. Repo: https://github.com/RoyerJu64/Particle_Simulation_GPU_Project
+- Performance Analysis of a Tiny Diffusion Model (Academic). [Full report available.] Profiling study of a minimal PyTorch DDPM. Repo: https://github.com/FAR3L/tiny-diffusion
+- Deep Q-Learning Agent for Sailing Navigation (Academic). [Full report available.] DQN agent for autonomous sailing in dynamic wind fields.
+
+INTERESTS
+Rugby (played at regional and national level; former VP of the ENSE3 Rugby Association), mountain hiking, oenology.

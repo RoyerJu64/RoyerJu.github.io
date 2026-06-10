@@ -1,0 +1,37 @@
+=== REPORT: Reinforcement Learning — Deep Q-Learning Agent for Sailing Navigation ===
+Author: Julien Royer | Reinforcement Learning course project
+
+ABSTRACT
+Design, implementation, and training of a Deep Q-Network (DQN) agent for autonomous sailing navigation in dynamic wind fields. The agent must navigate from a starting position to a goal location while optimally exploiting wind patterns. The report covers architectural choices, feature engineering, training methodology, and a detailed performance analysis.
+
+PROBLEM
+An agent must reach a goal position in a grid environment while dealing with spatially and temporally varying wind fields, exploiting wind dynamics to reach the goal as fast as possible.
+- State space: position (x,y), velocity (vx,vy), local wind (wx,wy), and a full wind field.
+- Action space: 9 discrete actions (8 directional movements + stay).
+- Dynamics: wind-assisted movement following sailing physics.
+
+AGENT ARCHITECTURE
+Deep Q-Network approximating Q(s,a): input layer of 32 features, one hidden layer of 64 neurons with ReLU, output layer of 9 neurons (one per action). He initialisation for weights; biases initialised to zero.
+Feature engineering compresses the raw ~2054-value observation into a 32-dimensional vector: position & goal features (normalised position, goal distance, goal direction cosine), velocity features, local wind features, sailing-physics features (wind-velocity angle, wind-goal angle), and a 16-feature regional wind analysis (4x4 grid of average winds, keeping the top 16 along the path to goal). Q-values computed via forward pass with ReLU and activation clipping at 50 for gradient stability.
+
+TRAINING METHODOLOGY
+DQN with experience replay. Target network with frozen weights stabilises training; TD target y = r + gamma * max_a' Q(s', a'; theta-), gamma = 0.99. Loss is mean squared TD error over minibatches of 64. Circular replay buffer of size 10,000. Manual backpropagation implemented.
+Hyperparameters: learning rate 1e-3, gamma 0.99, epsilon from 1.0 to 0.05 with linear decay over 1000 episodes, replay buffer 10,000, minibatch 64, target update every 5 episodes, max episode length 1000 steps, 1000 training episodes.
+Training mixed five scenarios per episode (simple_static, static_headwind, training_1/2/3) with random seeds. Epsilon-greedy exploration with linear decay.
+
+ATTEMPTED IMPROVEMENTS (limited success)
+- Shaped rewards for efficiency: added step penalties and distance-to-goal terms; various penalties tested; no concrete improvement observed.
+- Curriculum learning: phased from static uniform winds to dynamic to all scenarios; the agent learned quickly on each but struggled to adapt at transitions (performance drops suggesting forgetting).
+
+PERFORMANCE ANALYSIS
+Results across wind scenarios: SIMPLE_STATIC 90% success (reward 31.38, 117.4 steps); STATIC_HEADWIND 100% (32.22, 117.8); TRAINING_1 100% (59.15, 53.8); TRAINING_2 100% (70.75, 35.6); TRAINING_3 100% (51.73, 68.2). Average across training scenarios: 99% success, mean reward 49.05, mean 78.6 steps.
+Episode lengths show a bimodal distribution: ~80% fast episodes (<70 steps), ~20% slow (>100 steps); slow episodes (often on simple scenarios) disproportionately increase average step counts.
+Root cause: dynamic scenarios get strong performance (the agent actively seeks wind corridors, adapts orientation, executes smooth paths) while simple/uniform scenarios degrade (inconsistent tacking angles, overshoot/undershoot, oscillation). For uniform winds the feature set becomes degenerate (regional winds nearly identical, wind-goal angle near constant), so the effective feature space shrinks to ~9 features, lacking information for precise tacking control.
+
+FUTURE DIRECTIONS
+- Hierarchical policy: a high-level controller selecting strategy (exploit variations vs disciplined tacking) and a low-level controller executing it.
+- Augmented features measuring wind-field properties (spatial variance, directional consistency) to let the agent recognise scenario type and adapt strategy.
+
+CONCLUSION
+The DQN agent achieves good performance on complex dynamic wind scenarios but struggles on simpler uniform conditions. It demonstrates strong learning on wind-assisted navigation, and the failure-mode analysis points to clear improvements: balanced training curricula and more sophisticated (hierarchical) policy architectures.
+Submission contains: my_agent.py (inference with trained weights), dqn_agent.py (agent class before training), train_agent.py (training script).

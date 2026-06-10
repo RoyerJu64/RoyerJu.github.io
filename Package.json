@@ -1,0 +1,10 @@
+{
+  "name": "julien-royer-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Personal portfolio of Julien Royer, with an embedded Ask-Julien AI assistant (Groq + serverless).",
+  "engines": {
+    "node": ">=18"
+  }
+}

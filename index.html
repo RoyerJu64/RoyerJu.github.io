@@ -1313,5 +1313,270 @@ document.querySelectorAll('.skill-fill').forEach(f => {
   if (!parent) f.classList.add('animated');
 });
 </script>
+
+<!-- ============ ASK-JULIEN CHAT WIDGET ============ -->
+<style>
+  .cw-fab {
+    position: fixed; bottom: 22px; right: 22px; z-index: 500;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--rust), var(--navy));
+    border: none; cursor: pointer;
+    box-shadow: 0 8px 22px var(--glow);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cw-fab:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 12px 28px var(--glow); }
+  .cw-fab svg { width: 26px; height: 26px; fill: #fff; }
+  .cw-fab.cw-hidden { display: none; }
+
+  .cw-panel {
+    position: fixed; bottom: 22px; right: 22px; z-index: 501;
+    width: min(380px, calc(100vw - 32px));
+    height: min(560px, calc(100vh - 44px));
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    display: none; flex-direction: column; overflow: hidden;
+  }
+  .cw-panel.cw-open { display: flex; animation: cw-in 0.25s ease; }
+  @keyframes cw-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+  .cw-head {
+    background: linear-gradient(135deg, var(--rust), var(--navy));
+    color: #fff; padding: 14px 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .cw-head .cw-avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-weight: 600; font-size: 15px;
+  }
+  .cw-head .cw-title { font-family: var(--serif); font-weight: 600; font-size: 15px; line-height: 1.1; }
+  .cw-head .cw-sub { font-size: 11px; opacity: 0.85; }
+  .cw-head .cw-close {
+    margin-left: auto; background: none; border: none; color: #fff;
+    font-size: 20px; cursor: pointer; opacity: 0.85; line-height: 1;
+  }
+  .cw-head .cw-close:hover { opacity: 1; }
+
+  .cw-body {
+    flex: 1; overflow-y: auto; padding: 16px;
+    display: flex; flex-direction: column; gap: 12px;
+    background:
+      radial-gradient(600px 300px at 100% 0%, rgba(42,111,191,0.05), transparent 60%),
+      var(--bg);
+  }
+  .cw-msg { max-width: 85%; padding: 10px 13px; border-radius: 13px; font-size: 14px; line-height: 1.55; white-space: pre-wrap; }
+  .cw-msg.cw-bot { align-self: flex-start; background: #fff; border: 1px solid var(--border); color: var(--ink2); border-bottom-left-radius: 4px; }
+  .cw-msg.cw-user { align-self: flex-end; background: linear-gradient(135deg, var(--rust), var(--navy)); color: #fff; border-bottom-right-radius: 4px; }
+  .cw-msg a { color: var(--rust); }
+  .cw-msg.cw-user a { color: #fff; text-decoration: underline; }
+
+  .cw-typing { align-self: flex-start; display: flex; gap: 4px; padding: 12px 14px; background: #fff; border: 1px solid var(--border); border-radius: 13px; border-bottom-left-radius: 4px; }
+  .cw-typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--ink3); opacity: 0.5; animation: cw-bounce 1.2s infinite; }
+  .cw-typing span:nth-child(2) { animation-delay: 0.2s; }
+  .cw-typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes cw-bounce { 0%,60%,100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-4px); opacity: 0.9; } }
+
+  .cw-suggest { display: flex; flex-wrap: wrap; gap: 7px; padding: 0 16px 8px; }
+  .cw-chip {
+    font-size: 12px; font-weight: 500; color: var(--rust);
+    background: var(--rust-lt); border: 1px solid rgba(42,111,191,0.22);
+    padding: 6px 11px; border-radius: 16px; cursor: pointer;
+    transition: background 0.15s, transform 0.15s;
+  }
+  .cw-chip:hover { background: #d8e9fb; transform: translateY(-1px); }
+
+  .cw-input {
+    display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--border); background: var(--bg);
+  }
+  .cw-input textarea {
+    flex: 1; resize: none; border: 1px solid var(--border2); border-radius: 10px;
+    padding: 9px 12px; font-family: var(--sans); font-size: 14px; color: var(--ink);
+    background: #fff; max-height: 96px; line-height: 1.4;
+  }
+  .cw-input textarea:focus { outline: none; border-color: var(--rust); }
+  .cw-send {
+    flex-shrink: 0; width: 40px; border: none; border-radius: 10px; cursor: pointer;
+    background: linear-gradient(135deg, var(--rust), var(--navy));
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.2s;
+  }
+  .cw-send:disabled { opacity: 0.5; cursor: default; }
+  .cw-send svg { width: 18px; height: 18px; fill: #fff; }
+  .cw-foot { font-size: 10px; color: var(--ink3); text-align: center; padding: 0 0 8px; }
+</style>
+
+<button class="cw-fab" id="cwFab" aria-label="Open chat">
+  <svg viewBox="0 0 24 24"><path d="M12 3C6.5 3 2 6.8 2 11.5c0 2.4 1.2 4.6 3.1 6.1-.1 1.1-.5 2.4-1.4 3.4 1.6-.2 3.2-.9 4.3-1.7 1.2.4 2.5.6 4 .6 5.5 0 10-3.8 10-8.4S17.5 3 12 3z"/></svg>
+</button>
+
+<div class="cw-panel" id="cwPanel" role="dialog" aria-label="Ask Julien chat">
+  <div class="cw-head">
+    <div class="cw-avatar">JR</div>
+    <div>
+      <div class="cw-title">Ask Julien</div>
+      <div class="cw-sub">AI assistant · about Julien &amp; his work</div>
+    </div>
+    <button class="cw-close" id="cwClose" aria-label="Close chat">&times;</button>
+  </div>
+  <div class="cw-body" id="cwBody"></div>
+  <div class="cw-suggest" id="cwSuggest"></div>
+  <div class="cw-input">
+    <textarea id="cwText" rows="1" placeholder="Ask me anything about Julien…"></textarea>
+    <button class="cw-send" id="cwSend" aria-label="Send">
+      <svg viewBox="0 0 24 24"><path d="M3 20.5l18-8.5L3 3.5l.01 6.5L15 12 3.01 14z"/></svg>
+    </button>
+  </div>
+  <div class="cw-foot">Powered by an LLM · answers may be imperfect</div>
+</div>
+
+<script>
+(function () {
+  // ── CONFIG ──────────────────────────────────────────────
+  // After deploying api/chat.js to Vercel, set this to your endpoint.
+  // If the site is hosted on the SAME Vercel project as the function,
+  // you can leave it as "/api/chat".
+  const API_URL = "/api/chat";
+  // If the site stays on GitHub Pages and the function is on Vercel,
+  // use the full URL instead, e.g.:
+  // const API_URL = "https://your-project.vercel.app/api/chat";
+  // ────────────────────────────────────────────────────────
+
+  const fab = document.getElementById("cwFab");
+  const panel = document.getElementById("cwPanel");
+  const closeBtn = document.getElementById("cwClose");
+  const body = document.getElementById("cwBody");
+  const suggest = document.getElementById("cwSuggest");
+  const text = document.getElementById("cwText");
+  const send = document.getElementById("cwSend");
+
+  const SUGGESTIONS = [
+    "What does Julien do at Thales?",
+    "Tell me about the GPU project",
+    "What did he research at INRIA?",
+    "What are his AI/ML skills?",
+  ];
+
+  let messages = [];      // {role, content}
+  let busy = false;
+  let greeted = false;
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;" }[c]));
+  }
+  // Minimal formatting: links + **bold**
+  function format(s) {
+    let h = escapeHtml(s);
+    h = h.replace(/(https?:\/\/[^\s)]+)|(\b[\w.+-]+@[\w-]+\.[\w.-]+\b)/g, (m) => {
+      const href = m.includes("@") ? "mailto:" + m : m;
+      return `<a href="${href}" target="_blank" rel="noopener">${m}</a>`;
+    });
+    h = h.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    return h;
+  }
+
+  function addMsg(role, content) {
+    const div = document.createElement("div");
+    div.className = "cw-msg " + (role === "user" ? "cw-user" : "cw-bot");
+    div.innerHTML = format(content);
+    body.appendChild(div);
+    body.scrollTop = body.scrollHeight;
+    return div;
+  }
+
+  function showTyping() {
+    const t = document.createElement("div");
+    t.className = "cw-typing"; t.id = "cwTyping";
+    t.innerHTML = "<span></span><span></span><span></span>";
+    body.appendChild(t);
+    body.scrollTop = body.scrollHeight;
+  }
+  function hideTyping() {
+    const t = document.getElementById("cwTyping");
+    if (t) t.remove();
+  }
+
+  function renderSuggestions() {
+    suggest.innerHTML = "";
+    SUGGESTIONS.forEach(q => {
+      const b = document.createElement("button");
+      b.className = "cw-chip"; b.textContent = q;
+      b.onclick = () => { if (!busy) submit(q); };
+      suggest.appendChild(b);
+    });
+  }
+
+  function greet() {
+    if (greeted) return;
+    greeted = true;
+    addMsg("bot", "Hi! I'm an AI assistant that can answer questions about Julien — his background, skills, experience and projects. What would you like to know?");
+    renderSuggestions();
+  }
+
+  async function submit(q) {
+    if (busy) return;
+    q = (q || text.value).trim();
+    if (!q) return;
+    text.value = "";
+    autoGrow();
+    suggest.innerHTML = "";
+    addMsg("user", q);
+    messages.push({ role: "user", content: q });
+    busy = true; send.disabled = true;
+    showTyping();
+
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages }),
+      });
+      hideTyping();
+      if (!res.ok) {
+        addMsg("bot", "Sorry, something went wrong reaching the assistant. You can email Julien at Julien.Royer1@grenobleinp.org.");
+      } else {
+        const data = await res.json();
+        const answer = data.answer || "Sorry, I couldn't generate an answer.";
+        addMsg("bot", answer);
+        messages.push({ role: "assistant", content: answer });
+      }
+    } catch (e) {
+      hideTyping();
+      addMsg("bot", "Sorry, I couldn't reach the assistant right now. You can email Julien at Julien.Royer1@grenobleinp.org.");
+    } finally {
+      busy = false; send.disabled = false;
+      text.focus();
+    }
+  }
+
+  function autoGrow() {
+    text.style.height = "auto";
+    text.style.height = Math.min(text.scrollHeight, 96) + "px";
+  }
+
+  function openPanel() {
+    panel.classList.add("cw-open");
+    fab.classList.add("cw-hidden");
+    greet();
+    setTimeout(() => text.focus(), 100);
+  }
+  function closePanel() {
+    panel.classList.remove("cw-open");
+    fab.classList.remove("cw-hidden");
+  }
+
+  fab.addEventListener("click", openPanel);
+  closeBtn.addEventListener("click", closePanel);
+  send.addEventListener("click", () => submit());
+  text.addEventListener("input", autoGrow);
+  text.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); submit(); }
+  });
+})();
+</script>
+<!-- ============ /ASK-JULIEN CHAT WIDGET ============ -->
 </body>
 </html>

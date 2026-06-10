@@ -1,0 +1,662 @@
+## Contexte du stage
+
+## L'Inria
+
+L’Institut national de recherche en informatique et en automatique (Inria) est un établissement public français dédié à la recherche en sciences et technologies du numérique.
+
+Créé pour faire le lien entre le monde académique et l’industrie, Inria se positionne à la pointe de la recherche numérique. Il est reconnu pour avoir été précurseur dans des domaines clés tels que le calcul scientifique, ou le Web.
+
+L'institut regroupe plus de 3 800 scientifiques, répartis dans près de 300 projets de recherche, en partenariat avec de grandes universités et acteurs industriels.
+
+l'Inria est présent dans plusieurs villes françaises, dont Grenoble, Bordeaux, Paris-Saclay, Lille, Lyon et Rennes.
+
+## L'équipe Makutu
+
+L’une des équipes de recherche du centre Inria Bordeaux Sud-Ouest est l’équipe Makutu, hébergée dans les locaux du Laboratoire de Mathématiques et de leurs Applications (LMAP) de l'Université de Pau et des Pays de l’Adour (UPPA).
+
+Créée en 2005 et dirigée par Hélène Barucq, d'abord sous le nom de Magique3D, Makutu se spécialise dans la modélisation et la simulation de la propagation des ondes, appliquées à la caractérisation de milieux géophysiques et héliophysiques. Elle développe notamment des outils numériques pour reconstruire la forme et les propriétés de milieux complexes, avec un intérêt particulier pour la Terre et ses réservoirs naturels.
+
+Makutu est une équipe commune Inria et TotalEnergies, dont les travaux portent notamment sur des projets liés au stockage géologique du CO2.
+
+L’équipe réunit une grande diversité de profils : chercheurs, ingénieurs, doctorants, post-doctorants, ainsi que des ingénieurs de TotalEnergies.
+
+La coopération avec TotalEnergies s’articule autour du code open-source GEOS (Geometry Engine Open-Source), une bibliothèque C/C++ dédiée à la géométrie algorithmique, initialement développée par le Lawrence Livermore National Laboratory et Stanford University (USA), et largement utilisée dans les logiciels de systèmes d'information géographique (SIG).
+
+TotalEnergies soutient le développement du projet via son Centre Scientifique et Technique Jean Féger (CSTJF) à Pau et Total Houston, et met à disposition ses supercalculateurs Pangea, parmi les plus puissants au monde dans le domaine du calcul haute performance (HPC).
+
+## Objectifs du stage
+
+Dans le cadre du projet mené par l’équipe Makutu et TotalEnergies, le code GEOS est adapté pour résoudre des équations aux dérivées partielles (EDP) sur des domaines 3D complexes. Il repose pour cela sur des méthodes numériques avancées : éléments finis, éléments spectraux (SEm), ou méthode de Galerkine discontinue (DG).
+
+Ces outils numériques permettent de simuler la propagation d’ondes dans des milieux comme l’océan, à partir de sources mobiles. Ces simulations peuvent notamment servir à cartographier les fonds marins et à identifier des réservoirs naturels susceptibles de stocker le CO2.
+
+Le milieu étudié est premièrement discrétisé en un maillage, constitué d’éléments géométriques. En 2D, on utilise typiquement des triangles ou quadrilatères.
+
+En 3D, on peut généralement choisir entre héxaèdres et tétraèdres, ou plus rarement des prismes/pyramides pour des zones restreintes.
+
+Les héxaèdres sont bien adaptés aux domaines réguliers. Ils offrent de bonnes performances numériques avec peu d’éléments, notamment lorsque la géométrie est alignée sur des axes.
+
+À l’inverse, les tétraèdres sont préférés pour les géométries complexes ou irrégulières, car ils sont plus flexibles et faciles à générer automatiquement.
+
+Dans une optique d’optimisation du coût de calcul et des performances, il est intéressant de recourir à des maillages hybrides, combinant héxaèdres pour les zones régulières et tétraèdres pour les zones complexes. Cette combinaison permet de tirer parti à la fois de la flexibilité des tétraèdres et de l’efficacité des héxaèdres.
+
+L’ajout d’éléments pyramidaux dans ce type de maillage permet d'obtenir une transition naturelle entre les tétraèdres et les héxaèdres. Grâce à eux, il devient possible de mailler des géométries complexes sans compromettre la qualité du maillage ni la stabilité des algorithmes numériques.
+
+## Déroulé du stage
+
+Dans ce contexte, le stage porte sur l’étude et le développement de la méthode DG sur des éléments pyramidaux. Il s’articule en quatre étapes principales :
+
+- Une revue de littérature, consacrée aux différentes formulations de la méthode DG sur les éléments pyramidaux, pour comprendre les approches existantes et leurs avantages ;
+
+- La rédaction formelle des formulations mathématiques et des schémas numériques associés à ces éléments ;
+
+- L’implémentation des méthodes, avec pour objectif leur intégration dans le code GEOS ;
+
+- La rédaction d’un rapport technique documentant les méthodes étudiées, les choix effectués, et les perspectives de validation ou d’amélioration.
+
+% État de l’art
+État de l’art
+
+## Méthode de Galerkine Discontinue
+
+## Équation à résoudre
+
+Dans le cadre de la modélisation des ondes acoustiques linéaires, on considère l’équation d’onde au second ordre suivante :
+
+où :
+
+- p(x,t) R est la pression,
+
+- c est la vitesse de propagation de l'onde,
+
+- f(x,t) est une source,
+
+- est un paramètre de condition aux limites : =0 correspond à une condition de Neumann, =1c absorbante du premier ordre,
+
+- R^d est le domaine spatial.
+
+## Formulation faible
+
+On multiplie par une fonction test q(x) H^1( ) et on intègre sur un élément K :
+
+[
+_K 1c^2 _tt p q dx = _K p q dx + _K f q dx.
+]
+
+Après intégration par parties du terme de Laplacien :
+[
+_K p q dx = - _K p q dx + _ K ( p n) q ds.
+]
+
+## Formulation de Galerkine discontinue
+
+La méthode de Galerkine discontinue consiste à approximer la solution p par des fonctions polynomiales par morceaux, qui sont discontinues entre les éléments du maillage.
+
+Espace d’approximation :: On choisit :
+[
+p_h V_h := _K P^N(K),
+]
+où P^N(K) désigne l’espace des polynômes de degré inférieur ou égal à N sur l’élément K.
+
+Flux numériques :: Pour traiter les interfaces, on définit :
+
+- le saut d’un scalaire [[p]] = p^+ n^+ + p^- n^-,
+
+- le saut d’un vecteur [[u]] = u^+ n^+ + u^- n^-,
+
+- la moyenne ! u ! = 12(u^+ + u^-).
+
+Sur une interface interne, les flux sont réécrits sous la forme symétrisée :
+[
+[[ p q]] = ! p ! [[q]] + ! q ! [[p]],
+]
+auxquels on ajoute un terme de pénalisation, nécessaire pour stabiliser numériquement la solution (cela conserve l'énergie car le saut d'une fonction continue est nul)
+[
+_ _int [[p]] [[q]],
+]
+avec > 0 paramètre de pénalisation.
+
+Formulation DG locale :: La formulation variationnelle symétrisée avec pénalisation s’écrit alors, pour tout q fonction test :
+
+[
+aligned[t]
+_ 1c^2 _tt p_h q_h dx
+= - _ p_h q_h dx
++ _ _int ! p_h ! [[q_h]] ds
+
++ _ _int ! q_h ! [[p_h]] ds
++ _ _int [[p_h]] [[q_h]] ds
++ _ _out p_h n q_h ds
++ _ f q_h dx.
+aligned
+]
+
+## Problème sous forme matricielle
+
+## Décomposition sur la base de Polynômes P_k
+
+Dans la formulation modale DG, on approxime le champ p_h localement sur chaque élément K comme combinaison linéaire de fonctions de base orthogonales :
+
+[
+p_h(x, t) |_K = _j=1^N_p p_j^K(t) _j(x),
+]
+
+où :
+
+- _j(x)_j=1^N_p est une base polynomiale locale sur K,
+
+- N_p est le nombre de degrés de liberté,
+
+- p_j^K(t) sont les coefficients temporels (degrés de liberté).
+
+On insère cette approximation dans la formulation faible, en prenant pour fonctions tests les mêmes _i (formulation de Galerkine).
+
+## Matrice de masse
+
+En considérant le terme temporel :
+
+[
+_K 1c^2 _tt p_h q_h dx
+= 1c^2 _j=1^N_p _tt p_j^K(t) _K _j(x) _i(x) dx,
+]
+
+on définit la matrice de masse locale M par :
+
+[
+M_ij = _K _j(x) _i(x) dx,
+]
+
+et on obtient :
+
+[
+M _tt p^K(t).
+]
+
+## Matrice de raideur
+
+Le terme volumique implique le gradient des fonctions de base :
+
+[
+- _K p_h q_h dx
+= - _j=1^N_p p_j^K(t) _K _j(x) _i(x) dx.
+]
+
+On introduit la matrice de raideur :
+[
+S_ij = _K _j(x) _i(x) dx,
+]
+
+afin d’exprimer ce terme sous forme matricielle.
+
+## Matrices de flux aux interfaces
+
+Les termes de bord issus de l’intégration par parties introduisent des contributions aux interfaces K :
+
+[
+_ K p_h _i ds
+= _j=1^N_p p_h_j(t) _ K _j(x) _i(x) ds.
+]
+
+On définit alors la matrice de flux :
+
+[
+F_ij^flux = _ K _j(x) _i(x) ds.
+]
+
+## Système semi-discret local (forme matricielle)
+
+Sur chaque élément K, le système peut s’écrire sous forme semi-discrète :
+
+[
+M _tt p_h^K
+= - S p_h^K + F^ K p_h^K + b^K,
+]
+
+où :
+
+- S : matrice de raideur (Laplacien),
+
+- F^ K : contributions de flux numériques sur les bords de K,
+
+- b^K : contributions de la source volumique.
+
+## Conclusion
+
+La formulation modale DG fait apparaître naturellement :
+
+- la matrice de masse M, liée à l’inertie du champ,
+
+- la matrice de raideur S, liée aux dérivées spatiales (opérateur de Laplace),
+
+- les matrices de flux F, qui assurent la communication entre les éléments via les interfaces.
+
+Au cœur de cette méthode se trouve le choix des fonctions de base _j utilisées pour représenter le champ p_h sur chaque élément. Ces fonctions doivent satisfaire plusieurs conditions essentielles pour garantir la qualité de la méthode :
+
+- Compatibilité avec le domaine de référence : les fonctions sont définies sur un élément de référence (cube, tétraèdre, pyramide, etc.) et peuvent être transformées facilement vers les éléments physiques via des changements de variables.
+
+- Adéquation aux conditions de régularité du problème : dans la méthode DG, les fonctions sont discontinues entre les éléments, mais doivent posséder suffisamment de régularité à l’intérieur de chaque élément pour permettre le calcul des dérivées spatiales et des intégrales de volume et de surface.
+
+- Reproductibilité polynomiale : pour atteindre un ordre de convergence donné, la base doit permettre d’exactement représenter tous les polynômes jusqu’à un certain degré (espace P^k complet ou incomplet selon les besoins).
+
+- Compatibilité avec les intégrales de surface : les fonctions doivent permettre un calcul efficace des flux numériques aux interfaces, notamment via leur traçabilité sur les faces des éléments (restriction aux bords).
+
+- Orthogonalité locale (optionnel) : une base orthogonale permet de diagonaliser ou de simplifier la matrice de masse, ce qui réduit fortement le coût du calcul (par exemple en évitant son inversion à chaque pas de temps).
+
+Ainsi, la construction de ces fonctions de base constitue l’un des aspects les plus cruciaux dans la mise en œuvre efficace et précise de la méthode DG.
+
+## Application aux éléments pyramidaux
+
+L'utilisation de l'élément pyramidal soulève plusieurs difficultés théoriques et numériques, qui nécessitent des traitements spécifiques.
+
+Géométrie mixte et singularité au sommet ::
+
+La pyramide possède une géométrie hybride. Cette configuration induit une singularité géométrique au sommet : alors que les coordonnées dans le plan de base sont régulières, l’axe vertical concentre une singularité en (0,0,1), où toutes les arêtes latérales se rejoignent.
+
+Cette singularité implique que les fonctions de base définies dans un repère cartésien standard n’ont pas nécessairement un comportement régulier sur l’ensemble de l’élément.
+
+Absence de structure tensorielle ::
+
+Contrairement aux éléments standards comme le cube, la pyramide ne permet pas une factorisation directe des fonctions de base en produits de fonctions unidimensionnelles.
+
+Fonctions de base rationnelles ::
+
+Pour surmonter ces difficultés, les bases modales sur la pyramide sont généralement construites à partir de fonctions rationnelles (rapport de polynômes), afin de garantir la régularité des fonctions au sommet et la compatibilité avec les intégrales de surface sur les faces triangulaires et carrée.
+
+% Théorie et méthodologie
+Recherche de fonctions de base
+Trois constructions d'espaces de fonctions de base ont été étudiées puis implémentées. Ces dernières sont présentées dans des thèses ou d'articles de recherche.
+
+## Base nodale : Bergot, Cohen, Duruflé
+
+Des travaux récents, reprenant les pistes apportées par Bergot (2010) , développent une méthode rigoureuse de construction de fonctions de base nodales pour une pyramide, aux propriétés très utiles et facilitant des calculs.
+
+Pour une pyramide de référence et un ordre de calcul ( r ), le nombre total de degrés de liberté (DoFs) est donné par :
+[
+n = (r+1)(r+2)(2r+3)6
+]
+Ce nombre correspond à la dimension de l’espace de fonctions ( P_r ) construit sur la pyramide.
+
+## Définition de la base orthogonale
+
+Pour construire un ensemble de fonctions de base, on cherche comme point de départ une base orthogonale de l’espace, pour profiter des proprétés intéressantes de l'orthogonalité. Cela se fait en utilisant les polynômes de Jacobi. Un polynôme de Jacobi ( P_m^(a,b)(x) ) est défini comme étant orthogonal sur l’intervalle ( [-1,1] ) pour le poids ( (1 - x)^a (1 + x)^b ).
+
+## Formule générale
+
+La base orthogonale ( ^i,j,k(x,y,z) ) pour la pyramide de référence (cf. Figure 2.2) est définie comme :
+[
+^i,j,k(x,y,z) =
+P_i^(0,0) ( x1-z )
+P_j^(0,0) ( y1-z )
+(1 - z)^ (i,j)
+P_k^(2 (i,j)+2,0)(2z - 1)
+]
+pour les triplets (modes) :
+[
+0 i r, 0 j r, 0 k r - (i,j)
+]
+
+Cette formule permet de construire une base modale orthogonale adaptée à la géométrie de la pyramide.
+
+## Construction des fonctions de base nodales
+
+On définit les fonctions de base nodales ( N_i(x,y,z) ) à partir de la base modale en utilisant une matrice de Vandermonde ( VDM ). Chaque ligne de cette matrice contient les valeurs des fonctions ( _j ) évaluées aux noeuds (DoFs) ( M_i ) :
+[
+VDM_i,j = _j(M_i)
+]
+
+En inversant la matrice ( VDM ), on obtient les fonctions nodales via :
+[
+N = VDM^-1
+]
+
+## Exemple à l'ordre 1
+
+Pour un élément d'ordre ( r = 1 ), la base orthogonale est composée des fonctions suivantes :
+[
+aligned
+_1(x,y,z) = 1
+
+_2(x,y,z) = x
+
+_3(x,y,z) = y
+
+_4(x,y,z) = 4z - 1
+
+_5(x,y,z) = xy1-z
+aligned
+]
+On calcule ensuite la matrice de VDM :
+
+[
+VDM =
+bmatrix
+1 -1 -1 -1 1
+
+1 1 -1 -1 -1
+
+1 1 1 -1 1
+
+1 -1 1 -1 -1
+
+1 0 0 3 0
+bmatrix
+]
+
+On obtient ainsi les fonctions suivantes :
+[
+aligned
+N_1(x,y,z) = 14(1 - x + y - z - xy1-z)
+
+N_2(x,y,z) = 14(1 + x + y - z + xy1-z)
+
+N_3(x,y,z) = 14(1 + x - y - z - xy1-z)
+
+N_4(x,y,z) = 14(1 - x - y - z + xy1-z)
+
+N_5(x,y,z) = z
+aligned
+]
+
+On note bien la rationalité de ces fonctions de base.
+
+Ces fonctions vérifient la condition d’interpolation nodale : ( N_i(M_j) = _ij ).
+
+## Base modale : Polynômes de Bernstein-Beziers
+
+Une seconde approche est de s'inspirer d'une méthode de construction des fonctions de base sur des tétraèdres à partir des Polynômes de Bernstein-Beziers comme cela a été implémenté sur GEOS.
+
+## Définition
+
+Les polynômes de Bernstein-Beziers de degré ( n ) sont définis sur l'intervalle ( [-1,1] ) par :
+
+[
+B_i^n(t) = ni t^i (1 - t)^n - i, pour i = 0, 1, , n avec n l'ordre des polynômes.
+]
+
+Une base engendrée par ces polynômes possède des propriétés intéressantes, telles que la positivité, la partition de l’unité et un support local, qui la rendent particulièrement adaptée aux méthodes d'éléments finis sur des tétraèdres (en utilisant les coordonnées barycentriques notamment).
+
+On peut définir les polynômes de Bernstein-Beziers sur des héxaèdres par produit tensoriel de polynômes sur les 3 dimensions :
+
+[
+B_ijk(a,b,c) =B_i^n-k(a)B_j^n-k(b)B_k^n(c)
+]
+pour [
+0 k n, 0 i, j n - k
+]
+
+## Construction de l'espace de fonctions pour les pyramides
+
+L'idée derrière cette méthode est de prendre comme point de départ l'espace de fonctions engendré par les polynômes de Bernstein-Bezier sur l'héxaèdre de référence (cube unité) :
+[
+B_ijk(a,b,c) =B_i^n-k(a)B_j^n-k(b)B_k^n(c)
+]
+pour [
+0 k n, 0 i, j n - k
+]
+
+On effectue alors un changement de coordonnées pour "aplatir" le cube en direction du sommet. On pose :
+
+[
+cases
+r = x(1-z)
+
+s = y(1-z)
+
+t = z
+cases
+]
+
+On obtient ainsi directement l'espace de fonctions de base pour un élément pyramidal à partir des polynômes de Bernstein-Bezier :
+
+[
+_ijk(r,s,t) = B_ijk(r1-t, s1-t, t)
+]
+
+Cette base de fonction, contrairement à celle construite par Bergot, Cohen, Durufle, n'est en aucun cas nodale (i.e les fonctions ne vérifient pas la condition d’interpolation nodale : ( _i(M_j) _ij ) avec i et j les indices des DoFs). Il y a tout de même équivalence entre les deux bases de fonctions, les deux espaces engendrés sont donc identiques.
+
+## Algorithme de De Casteljau
+
+La troisième méthode étudiée est similaire à la précédente, mais elle diffère de cette dernière par l'utilisation de l'algorithme de De Casteljau pour l'évaluation des polynômes de Bernstein-Bézier.
+
+La construction de la base reste identique, à l'exception du calcul des polynômes, qui repose ici sur un schéma récursif garantissant une évaluation stable et efficace des fonctions de base, en particulier dans les cas de haute précision ou de forte non-linéarité.
+
+## Ecriture de l'algorithme
+
+Soit un polynôme de Bernstein de degré ( n ), défini par ses coefficients de contrôle ( b_0, b_1, , b_n ). L'évaluation au point ( t [0,1] ) est donnée par l’algorithme récursif suivant :
+
+[
+aligned
+Initialisation : b_i^(0) := b_i, pour i = 0, , n
+
+Récurrence : b_i^(r) := (1 - t) b_i^(r-1) + t b_i+1^(r-1), pour i = 0, , n - r, r = 1, , n
+
+Résultat : B(t) = b_0^(n)
+aligned
+]
+L'algorithme est numériquement plus stable que l’évaluation directe de la formule de Bernstein pour un calcul aux ordres élevés.
+
+% Implémentation
+Implémentation numérique
+
+## Choix du langage de programmation
+
+L'objectif est dès lors d'implémenter numériquement les trois méthodes précédemment étudiées, afin de les comparer. Dans la perspective d'une intégration future dans le logiciel GEOS, le langage C++ a été retenu pour cette implémentation.
+
+Le C++ est un langage compilé, permettant une exécution rapide et une gestion fine des ressources mémoire, ce qui est crucial pour les codes de calcul intensif tels que les simulations numériques en éléments finis.
+
+De plus, le C++ permet une optimisation poussée du code et supporte nativement la programmation parallèle via des bibliothèques telles que OpenMP.
+
+## Structure des codes C++
+
+Chaque méthode a été codée en suivant la même architecture, de manière modulaire afin de faciliter leur comparaison pour une intégration dans une base de code plus large comme GEOS. La structure adoptée se décompose en plusieurs parties principales :
+
+- blueDéfinition des géométries : classe représentant l'élément pyramidal de référence ou les interfaces, incluant des méthodes permettant la génération des modes, nœuds et des coordonnées locales ;
+
+- darkyellowBases d’approximation : implémentation des fonctions de forme modales et nodales (polynômes de Jacobi, bases de Bernstein avec et sans algorithme de DeCasteljau) ;
+
+- darkgreenIntégration numérique : méthodes de génération des points et poids de quadrature adaptés à chaque géométrie (points de Gauss–Legendre, Gauss–Lobatto, Hesthaven , etc.) ;
+
+- redAssemblage : construction des matrices locales (masse, rigidité, flux d’interface) à partir de l'intégration numérique des termes ;
+
+- orangeSolveur : comparaison des différentes méthodes à travers la résolution de cas tests simples (ex. propagation d’onde, problème de diffusion).
+
+## Schéma UML simplifié de l’architecture du code C++
+
+La structure commune aux différentes méthodes est schématisée ci-dessous :
+
+## Réalisation de tests
+
+Afin de tout d'abord valider le bon fonctionnement de l'implémentation des méthodes, puis ensuite de comparer leurs performances, il est nécessaire de réaliser des tests à partir des matrices et fonctions de base associées à l'élément pyramidal construites par ces méthodes.
+
+Test 1 : Symétrie de la matrice de masse.:
+On considère la matrice de masse
+[
+M_ij = _K _i(x,y,z) _j(x,y,z) dx dy dz,
+]
+où _i sont les fonctions de base nodales sur la pyramide K.
+Par construction, la matrice M est symétrique :
+[
+M = M^ .
+]
+
+Test 2 : Partition de l’unité (somme des fonctions de base).:
+Pour tout point (x,y,z) K, on doit avoir
+[
+_i=1^N _i(x,y,z) = 1.
+]
+
+Test 3 : Conservation du volume par la matrice de masse.:
+Si l’on note 1 = (1, ,1)^ R^N, alors
+[
+V = 1^ M 1 = _K ( _i _i(x,y,z) )^2 dx dy dz.
+]
+Comme les fonctions de base nodales forment une partition de l’unité
+( _i _i 1), on doit avoir
+[
+V = _K 1 dx dy dz = 43.
+]
+
+Test 4 : Propriété nodale des fonctions de base (pour la méthode de Bergot-Cohen-Durufle uniquement).:
+Si x_j est le j-ième nœud, alors
+[
+_i(x_j) =
+cases
+1 si i=j,
+
+0 si i j.
+cases
+]
+Ceci est vérifié en évaluant explicitement _i aux coordonnées nodales de l’élément.
+
+Test 5 : Matrice de raideur et champ constant.:
+On considère la matrice de raideur
+[
+S_ij = _K _i _j dx dy dz.
+]
+Pour un champ constant u = _i _i = 1, on a u = 0, donc
+[
+1^ S 1 = 0.
+]
+
+Test 6 : Matrice de flux d’interface (cas masse).:
+On considère une face carrée (base) F de la pyramide et la matrice de flux
+[
+M_ij^ = _F _i^F- _j^F+ dS,
+]
+où _i^F- sont les fonctions de base de la pyramide et _j^F- celles de l’interface carrée.
+En appliquant 1^ M^ 1, on obtient l’aire de F, soit
+[
+1^ M^ 1 = |F| = 4.
+]
+
+Test 7 : Matrice de flux d’interface (cas raideur).:
+De même, une autre matrice de flux de type raideur sur une face est définie par
+[
+B_ij^ = _F _i^F- _j^F+ dS.
+]
+Un champ constant u 1 satisfait u = 0, ce qui implique
+[
+1^ B^ 1 = 0.
+]
+
+En résumé, ces tests numériques permettent de vérifier :
+
+- la symétrie des matrices
+
+- la partition de l’unité
+
+- la conservation du volume par la masse
+
+- la propriété nodale (pour la méthode BCD)
+
+- la compatibilité avec les champs constants
+
+- la cohérence des intégrales de surface
+
+## Comparaison de méthodes
+
+## Tableau comparatif
+
+L'objectif est maintenant de dresser les différentes caractéristiques des méthodes implémentées.
+
+Quant à l'algorithme de DeCasteljau dans le calcul des polynômes de Bernstein-Bezier, il permet une forte stabilité numérique et une robustesse pour des calculs aux ordres élevés. Cependant, la méthode DG est rarement utilisée pour des ordres supérieurs à 4, et la récursivité de l'algorithme ajoute un coût de calcul trop important.
+
+## Méthode choisie
+
+tcolorbox[colback=black!5!white,colframe=black!70!black,title=Choix final]
+En définitive, le choix s’est porté sur la méthode de Bergot--Cohen--Duruflé.
+En effet, celle-ci présente un avantage décisif du point de vue de la nodalité :
+les points utilisés sont précisément les points de Gauss–Lobatto, qui jouent simultanément le rôle de points nodaux pour la pyramide, de points de quadrature pour l’intégration numérique, ainsi que de DoFs des éléments hexaédriques adjacents (donc pour la base carrée de la pyramide), ce qui facilite grandement les calculs aux interfaces.
+
+Cette cohérence entre bases fonctionnelles et schémas d’intégration garantit une mise en œuvre plus simple et plus efficace dans un cadre DG.
+À l’inverse, la méthode de Bernstein--Bézier requiert des règles de quadrature spécifiques et plus complexes, ce qui alourdit considérablement son implémentation et son coût de calcul.
+tcolorbox
+
+## Intégration dans GEOS
+
+Avant son intégration dans le code GEOS, le développement initial a été optimisé afin d’éliminer les calculs superflux par une factorisation systématique des calculs redondants, de paralléliser les boucles critiques à l’aide d’OpenMP et d’exploiter la symétrie des matrices de masse, de raideur et de flux afin de réduire les coûts de calcul et de stockage.
+Toutefois, l’architecture de GEOS repose sur des principes différents. La parallélisation est assurée par ses propres mécanismes internes, et la philosophie retenue privilégie le calcul à la volée de la majorité des grandeurs, au moment de la compilation, afin de minimiser l’utilisation de la mémoire. Cette approche s’explique par l’environnement de calcul ciblé, en particulier la machine Pangea3, où l’abondance de ressources GPU et la limitation de leur mémoire vive rend la réduction de la consommation mémoire prioritaire par rapport à la diminution du nombre d’opérations.
+
+La structure de la partie relative à la formulation des différents types d'éléments, où se rajoute l'implémentation pour des éléments pyramidaux, s'organise de la manière suivante :
+
+La méthode codée pour les pyramides vient s'ajouter aux méthodes retenues pour les hexaèdres (méthode des éléments spectraux), et pour les tétraèdres (Polynômes de Bernstein).
+
+Une fois tous les tests revérifiés dans GEOS, l'équipe soumet une requête au coeur de développement de GEOS, issu principalement au Lawrence Livermore National Laboratory et Stanford University pour une fusion à la branche principale de développement du programme.
+Cette démarche se fait sous la forme d'une pull request par un compte accrédité contributeur GEOS. Le lien vers cette pull request est accessible ici : https://github.com/GEOS-DEV/GEOS/pull/3793
+
+% Conclusion
+Conclusion et perspectives
+
+## Bilan du stage
+
+Le travail réalisé au cours de ce stage aura permis une meilleure compréhension de la méthode DG, de son application aux éléments pyramidaux, une recherche approfondie de différentes méthodes permettant sa mise en œuvre, et surtout une implémentation numérique au sein d’un programme open-source développé à l’international et notamment financé par TotalEnergies, Livermore et Stanford University.
+
+Ce stage au sein d’une équipe de recherche, autour d’un projet commun entre institut de recherche public et milieu industriel, a constitué une formidable opportunité de découvrir comment s’articule le milieu de la recherche en France dans les domaines des mathématiques appliquées et du HPC. Il aura permis de se confronter à une approche complète de la résolution d’un problème à partir d’une simple idée, pour répondre à une question ouverte en s’inspirant de travaux déjà réalisés.
+
+Au-delà de l’aspect scientifique, ce stage m’a permis de développer des compétences techniques solides, telles que la programmation avancée en C++ et l’utilisation d’outils collaboratifs modernes (Git, bibliothèques scientifiques, environnements HPC). Sur le plan scientifique, j’ai acquis une vision approfondie des méthodes de type éléments finis discontinus, de leur formulation et de leurs difficultés numériques.
+
+Enfin, ce stage a également permis de développer des compétences générales essentielles pour un étudiant ingénieur : savoir adopter les bons réflexes face à un problème ouvert, effectuer des recherches bibliographiques et techniques, travailler en autonomie, et avoir la chance de contribuer à un projet de grande envergure mené en collaboration internationale.
+
+## Perspectives
+
+Le travail réalisé n’est qu’une étape dans le développement de méthodes numériques performantes sur des maillages hybrides. Plusieurs perspectives s’ouvrent à court et moyen terme :
+
+- l’optimisation et la validation de l’implémentation sur des cas tests plus variés ;
+
+- l’extension à d’autres familles de fonctions de base et la comparaison de leur efficacité numérique ;
+
+- l’application des schémas développés à des problèmes concrets issus de la mécanique des fluides, de l’électromagnétisme ou encore de l’acoustique.
+
+Sur un plan plus personnel, ce stage m’a conforté dans mon intérêt pour les mathématiques appliquées et le calcul haute performance. Cette expérience a renforcé mon souhait de poursuivre dans cette voie.
+
+% Annexes
+
+Extrait d'un fichier d'en-tête de code réalisé
+Pyramide.h
+
+Profils de tests de propagation d'une onde acoustique en utilisant la SEm pour un maillage en 2D
+
+Bilan de compétences global
+
+
+tocchapterGlossaire
+
+## Acronymes
+
+- Discontinuous Galerkin (méthode de Galerkine discontinue)
+
+- Spectral Element Method (méthode des éléments spectraux
+
+- Equation aux Derivées Partielles
+
+- High Performance Computing (calcul haute performance)
+
+- Geometry Engine Open-Source
+
+- Degrees of Freedom (degrés de liberté)
+
+- Vandermonde
+
+- Bernstein-Bezier
+
+- Graphics Processing Unit (processeur graphique)
+
+## Définitions
+
+- Condition aux limites imposant la dérivée normale d’une variable (flux).
+
+- Terme ajouté aux interfaces en DG pour assurer la continuité globale du champ calculé.
+
+- Représentation de la solution par coefficients associés à des fonctions de base globales (propriété valable dans tout l’élément).
+
+- Représentation de la solution par ses valeurs aux nœuds de quadrature (propriété imposée uniquement aux points nodaux).
+
+- Point ou zone où la géométrie ou la solution devient non régulière (divergente).
+
+- Nombre de coefficients indépendants décrivant la solution approchée.
+
+- Fonctions de base (ou combinaisons) utilisées pour représenter la solution.
+
+- Capacité d’un schéma à éviter la croissance artificielle des erreurs.
+
+- Points de quadrature incluant les extrémités, utilisés en DG/SEM.
