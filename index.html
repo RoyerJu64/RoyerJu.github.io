@@ -1318,26 +1318,24 @@ document.querySelectorAll('.skill-fill').forEach(f => {
 <style>
   .cw-fab {
     position: fixed; bottom: 22px; right: 22px; z-index: 500;
-    height: 60px; padding: 0 22px 0 9px; border-radius: 32px;
+    height: 78px; padding: 0 28px 0 11px; border-radius: 42px;
     background: linear-gradient(135deg, var(--rust), var(--navy));
     border: none; cursor: pointer;
     box-shadow: 0 8px 22px var(--glow);
-    display: flex; align-items: center; gap: 10px;
+    display: flex; align-items: center; gap: 13px;
     transition: transform 0.2s, box-shadow 0.2s;
   }
   .cw-fab:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 12px 28px var(--glow); }
   .cw-fab .cw-fab-bot {
-    width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
-    background: #fff;
-    display: flex; align-items: center; justify-content: center;
+    width: 58px; height: 58px; border-radius: 50%; flex-shrink: 0;
+    background: #fff; object-fit: contain;
     box-shadow: 0 1px 4px rgba(0,0,0,0.15);
   }
-  .cw-fab .cw-fab-bot svg { width: 24px; height: 24px; fill: var(--rust); }
-  .cw-fab .cw-fab-label { color: #fff; font-size: 14.5px; font-weight: 600; white-space: nowrap; letter-spacing: 0.01em; }
+  .cw-fab .cw-fab-label { color: #fff; font-size: 17px; font-weight: 600; white-space: nowrap; letter-spacing: 0.01em; }
   .cw-fab.cw-hidden { display: none; }
   /* pulsing ring to draw the eye */
   .cw-fab::before {
-    content: ''; position: absolute; inset: 0; border-radius: 32px;
+    content: ''; position: absolute; inset: 0; border-radius: 42px;
     border: 2px solid var(--rust); opacity: 0;
     animation: cw-ring 2.6s ease-out infinite;
     pointer-events: none;
@@ -1358,7 +1356,7 @@ document.querySelectorAll('.skill-fill').forEach(f => {
 
   /* marketing teaser bubble */
   .cw-teaser {
-    position: fixed; bottom: 94px; right: 22px; z-index: 499;
+    position: fixed; bottom: 112px; right: 22px; z-index: 499;
     max-width: 280px;
     display: flex; align-items: flex-start; gap: 10px;
     background: #fff; border: 1px solid var(--border);
@@ -1373,10 +1371,6 @@ document.querySelectorAll('.skill-fill').forEach(f => {
   }
   .cw-teaser.cw-show { opacity: 1; transform: none; pointer-events: auto; }
   .cw-teaser strong { color: var(--ink); font-weight: 600; }
-  .cw-teaser .cw-teaser-bot {
-    width: 50px; height: 50px; border-radius: 12px; flex-shrink: 0;
-    background: var(--bg2); object-fit: contain; margin-top: 1px;
-  }
   .cw-teaser .cw-teaser-x {
     position: absolute; top: 6px; right: 9px;
     font-size: 15px; color: var(--ink3); line-height: 1;
@@ -1409,7 +1403,7 @@ document.querySelectorAll('.skill-fill').forEach(f => {
     display: flex; align-items: center; gap: 10px;
   }
   .cw-head .cw-avatar {
-    width: 52px; height: 52px; border-radius: 13px;
+    width: 76px; height: 76px; border-radius: 16px;
     background: #fff; flex-shrink: 0; overflow: hidden;
     display: flex; align-items: center; justify-content: center;
     box-shadow: 0 1px 4px rgba(0,0,0,0.15);
@@ -1472,16 +1466,13 @@ document.querySelectorAll('.skill-fill').forEach(f => {
 </style>
 
 <button class="cw-fab" id="cwFab" aria-label="Open chat — Ask JulBot about Julien">
-  <span class="cw-fab-bot" aria-hidden="true">
-    <svg viewBox="0 0 24 24"><path d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H8.5L4 22V5a2 2 0 0 1 2-2zm3 6v2h10V9H7zm0 4v2h6v-2H7z"/></svg>
-  </span>
+  <img src="robot2.gif" alt="JulBot" class="cw-fab-bot">
   <span class="cw-fab-label">Ask JulBot</span>
   <span class="cw-dot" aria-hidden="true"></span>
 </button>
 
 <div class="cw-teaser" id="cwTeaser" role="button" tabindex="0">
   <button class="cw-teaser-x" id="cwTeaserX" aria-label="Dismiss">&times;</button>
-  <img src="robot2.gif" alt="JulBot" class="cw-teaser-bot">
   <span>👋 Hi, I'm <strong>JulBot</strong> — Julien's AI assistant. Ask me anything about his projects, skills or experience!</span>
 </div>
 
