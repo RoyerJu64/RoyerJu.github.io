@@ -1318,20 +1318,24 @@ document.querySelectorAll('.skill-fill').forEach(f => {
 <style>
   .cw-fab {
     position: fixed; bottom: 22px; right: 22px; z-index: 500;
-    height: 56px; padding: 0 20px 0 16px; border-radius: 30px;
+    height: 60px; padding: 0 22px 0 9px; border-radius: 32px;
     background: linear-gradient(135deg, var(--rust), var(--navy));
     border: none; cursor: pointer;
     box-shadow: 0 8px 22px var(--glow);
-    display: flex; align-items: center; gap: 9px;
+    display: flex; align-items: center; gap: 10px;
     transition: transform 0.2s, box-shadow 0.2s;
   }
   .cw-fab:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 12px 28px var(--glow); }
-  .cw-fab svg { width: 24px; height: 24px; fill: #fff; flex-shrink: 0; }
-  .cw-fab .cw-fab-label { color: #fff; font-size: 14px; font-weight: 600; white-space: nowrap; letter-spacing: 0.01em; }
+  .cw-fab .cw-fab-bot {
+    width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+    background: #fff; object-fit: cover;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  }
+  .cw-fab .cw-fab-label { color: #fff; font-size: 14.5px; font-weight: 600; white-space: nowrap; letter-spacing: 0.01em; }
   .cw-fab.cw-hidden { display: none; }
   /* pulsing ring to draw the eye */
   .cw-fab::before {
-    content: ''; position: absolute; inset: 0; border-radius: 30px;
+    content: ''; position: absolute; inset: 0; border-radius: 32px;
     border: 2px solid var(--rust); opacity: 0;
     animation: cw-ring 2.6s ease-out infinite;
     pointer-events: none;
@@ -1352,12 +1356,13 @@ document.querySelectorAll('.skill-fill').forEach(f => {
 
   /* marketing teaser bubble */
   .cw-teaser {
-    position: fixed; bottom: 88px; right: 22px; z-index: 499;
-    max-width: 250px;
+    position: fixed; bottom: 94px; right: 22px; z-index: 499;
+    max-width: 280px;
+    display: flex; align-items: flex-start; gap: 10px;
     background: #fff; border: 1px solid var(--border);
     border-radius: 14px; border-bottom-right-radius: 4px;
     box-shadow: var(--shadow-md);
-    padding: 13px 15px 13px 14px;
+    padding: 13px 15px 13px 13px;
     font-size: 13.5px; color: var(--ink2); line-height: 1.5;
     cursor: pointer;
     opacity: 0; transform: translateY(8px) scale(0.96);
@@ -1366,6 +1371,10 @@ document.querySelectorAll('.skill-fill').forEach(f => {
   }
   .cw-teaser.cw-show { opacity: 1; transform: none; pointer-events: auto; }
   .cw-teaser strong { color: var(--ink); font-weight: 600; }
+  .cw-teaser .cw-teaser-bot {
+    width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+    background: var(--bg2); object-fit: cover; margin-top: 1px;
+  }
   .cw-teaser .cw-teaser-x {
     position: absolute; top: 6px; right: 9px;
     font-size: 15px; color: var(--ink3); line-height: 1;
@@ -1381,8 +1390,8 @@ document.querySelectorAll('.skill-fill').forEach(f => {
 
   .cw-panel {
     position: fixed; bottom: 22px; right: 22px; z-index: 501;
-    width: min(380px, calc(100vw - 32px));
-    height: min(560px, calc(100vh - 44px));
+    width: min(440px, calc(100vw - 32px));
+    height: min(650px, calc(100vh - 44px));
     background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 16px;
@@ -1398,11 +1407,12 @@ document.querySelectorAll('.skill-fill').forEach(f => {
     display: flex; align-items: center; gap: 10px;
   }
   .cw-head .cw-avatar {
-    width: 34px; height: 34px; border-radius: 50%;
-    background: rgba(255,255,255,0.18);
+    width: 40px; height: 40px; border-radius: 50%;
+    background: #fff; flex-shrink: 0; overflow: hidden;
     display: flex; align-items: center; justify-content: center;
-    font-family: var(--serif); font-weight: 600; font-size: 15px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
   }
+  .cw-head .cw-avatar img { width: 100%; height: 100%; object-fit: cover; }
   .cw-head .cw-title { font-family: var(--serif); font-weight: 600; font-size: 15px; line-height: 1.1; }
   .cw-head .cw-sub { font-size: 11px; opacity: 0.85; }
   .cw-head .cw-close {
@@ -1459,23 +1469,24 @@ document.querySelectorAll('.skill-fill').forEach(f => {
   .cw-foot { font-size: 10px; color: var(--ink3); text-align: center; padding: 0 0 8px; }
 </style>
 
-<button class="cw-fab" id="cwFab" aria-label="Open chat — Ask my AI about me">
-  <svg viewBox="0 0 24 24"><path d="M12 3C6.5 3 2 6.8 2 11.5c0 2.4 1.2 4.6 3.1 6.1-.1 1.1-.5 2.4-1.4 3.4 1.6-.2 3.2-.9 4.3-1.7 1.2.4 2.5.6 4 .6 5.5 0 10-3.8 10-8.4S17.5 3 12 3z"/></svg>
-  <span class="cw-fab-label">Ask my AI</span>
+<button class="cw-fab" id="cwFab" aria-label="Open chat — Ask JulBot about Julien">
+  <img src="julbot_avatar.png" alt="JulBot" class="cw-fab-bot">
+  <span class="cw-fab-label">Ask JulBot</span>
   <span class="cw-dot" aria-hidden="true"></span>
 </button>
 
 <div class="cw-teaser" id="cwTeaser" role="button" tabindex="0">
   <button class="cw-teaser-x" id="cwTeaserX" aria-label="Dismiss">&times;</button>
-  👋 <strong>Curious about my work?</strong> Ask my AI assistant anything — my projects, skills or experience.
+  <img src="julbot_avatar.png" alt="" class="cw-teaser-bot">
+  <span>👋 Hi, I'm <strong>JulBot</strong> — Julien's AI assistant. Ask me anything about his projects, skills or experience!</span>
 </div>
 
-<div class="cw-panel" id="cwPanel" role="dialog" aria-label="Ask Julien chat">
+<div class="cw-panel" id="cwPanel" role="dialog" aria-label="Ask JulBot chat">
   <div class="cw-head">
-    <div class="cw-avatar">JR</div>
+    <div class="cw-avatar"><img src="julbot_avatar.png" alt="JulBot"></div>
     <div>
-      <div class="cw-title">Ask Julien</div>
-      <div class="cw-sub">AI assistant · about Julien &amp; his work</div>
+      <div class="cw-title">Ask JulBot</div>
+      <div class="cw-sub">Julien's personal AI assistant</div>
     </div>
     <button class="cw-close" id="cwClose" aria-label="Close chat">&times;</button>
   </div>
@@ -1568,7 +1579,7 @@ document.querySelectorAll('.skill-fill').forEach(f => {
   function greet() {
     if (greeted) return;
     greeted = true;
-    addMsg("bot", "Hi! I'm an AI assistant that can answer questions about Julien — his background, skills, experience and projects. What would you like to know?");
+    addMsg("bot", "Hi! I'm JulBot 🤖 — Julien's personal AI assistant. I can answer questions about his background, skills, experience and projects. What would you like to know?");
     renderSuggestions();
   }
 
