@@ -1,0 +1,82 @@
+/* ============================================================
+   tokens.css — SINGLE SOURCE OF TRUTH
+   Portfolio Julien Royer — editorial refonte
+   Light only · one accent (emerald) · sharp edges · hairlines
+   No hard-coded color / size / spacing in components: use these.
+   ============================================================ */
+
+:root {
+  /* ── COLOR ───────────────────────────────────────────────
+     Warm neutrals (never pure #fff / #000) + ONE saturated accent.
+     Contrast checked for AA (≥4.5:1) on --paper for text tokens.   */
+  --ink:           #16150F;  /* primary text — warm off-black            */
+  --ink-2:         #3D3B33;  /* strong secondary text                    */
+  --muted:         #615D52;  /* secondary text (AA on paper)             */
+  --paper:         #F7F4EC;  /* page background — warm cream             */
+  --paper-2:       #F1ECE0;  /* recessed panels / alternating bands      */
+  --paper-3:       #E9E3D4;  /* deepest neutral surface                  */
+
+  --accent:        #A8481F;  /* UNIQUE accent — burnt orange (AA on paper)*/
+  --accent-deep:   #82360F;  /* hover / pressed                          */
+  --accent-bright: #C8632E;  /* large decorative use only (not body text)*/
+  --accent-tint:   #F2E7DD;  /* pale burnt-orange wash for fills         */
+  --on-accent:     #FAF6EF;  /* text on accent surfaces                  */
+
+  --hairline:      #E2DCCE;  /* fine borders                             */
+  --hairline-2:    #CFC8B6;  /* stronger borders / dividers              */
+
+  /* ── TYPOGRAPHY ──────────────────────────────────────────
+     Display serif (high contrast) + grotesque body + mono accent.  */
+  --font-display:  'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-body:     'Geist', system-ui, -apple-system, sans-serif;
+  --font-mono:     'Geist Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* Modular scale (~1.25–1.33), violent display↔body jump */
+  --step--1: clamp(0.78rem, 0.74rem + 0.18vw, 0.875rem);
+  --step-0:  clamp(1rem,    0.97rem + 0.18vw, 1.0625rem);
+  --step-1:  clamp(1.2rem,  1.12rem + 0.36vw, 1.45rem);
+  --step-2:  clamp(1.5rem,  1.32rem + 0.8vw,  2rem);
+  --step-3:  clamp(1.9rem,  1.55rem + 1.5vw,  2.8rem);
+  --step-4:  clamp(2.4rem,  1.85rem + 2.5vw,  3.6rem);
+  --step-5:  clamp(2.9rem,  2.05rem + 3.8vw,  5rem);
+  --step-6:  clamp(3.4rem,  2.1rem + 6.2vw,   7rem);   /* hero display */
+
+  --lh-display: 1.04;
+  --lh-tight:   1.15;
+  --lh-body:    1.6;
+  --measure:    66ch;            /* paragraph max-width */
+
+  --tracking-display: -0.02em;   /* tighten big serif        */
+  --tracking-caps:     0.16em;   /* open up mono eyebrows    */
+
+  /* ── SPACE (base 4 / 8) ──────────────────────────────── */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+  --space-8: 8rem;
+
+  /* ── EDGES (one philosophy: sharp) ───────────────────── */
+  --radius:  0px;
+  --border:  1px solid var(--hairline);
+  --border-2: 1px solid var(--hairline-2);
+  --rule:    1px;                /* hairline weight */
+
+  /* ── LAYOUT ──────────────────────────────────────────── */
+  --max:     1200px;             /* content max-width */
+  --gutter:  max(1.5rem, 5vw);   /* page side padding */
+
+  /* ── MOTION ──────────────────────────────────────────── */
+  --ease:    cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 150ms;
+  --dur:      240ms;
+}
+
+/* Reduced-motion users: neutralise transitions/animations globally.
+   Components still read this so nothing relies on motion to be usable. */
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-fast: 0ms; --dur: 0ms; }
+}
