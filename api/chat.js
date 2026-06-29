@@ -6,7 +6,7 @@ import { CONTEXT } from "./context.js";
 
 // ---- Config ----
 const GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
-const MODEL = "llama-3.1-8b-instant";
+const MODEL = "meta-llama/llama-4-maverick-17b-128e-instruct";
 const MAX_QUESTION_LEN = 2000;
 
 // ---- Report routing: which full report to inject based on the question ----
