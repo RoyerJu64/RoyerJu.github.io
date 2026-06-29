@@ -159,6 +159,7 @@ h1.hero-name .hero-name-accent { font-style: normal; }
   transition: color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
 }
 .btn:hover { border-color: var(--ink); }
+.btn svg { width: 15px; height: 15px; flex-shrink: 0; stroke-width: 1.75; }
 .btn-rust {
   background: var(--accent);
   border-color: var(--accent);
@@ -478,6 +479,7 @@ h2.section-title {
   transition: opacity var(--dur-fast) var(--ease);
 }
 .proj-link:hover { opacity: .6; }
+.proj-link svg { width: 14px; height: 14px; flex-shrink: 0; stroke-width: 1.75; }
 .proj-link-btn {
   background: var(--accent);
   color: var(--on-accent);
@@ -584,7 +586,7 @@ footer a { color: var(--accent); text-decoration: none; }
     <div class="hero-actions">
       <a href="#projects" class="btn btn-rust">See my work →</a>
       <a href="cv_julien_royer.pdf" target="_blank" class="btn btn-outline">Download CV (PDF)</a>
-      <a href="https://github.com/royerju64" target="_blank" class="btn btn-outline">GitHub ↗</a>
+      <a href="https://github.com/royerju64" target="_blank" class="btn btn-outline">GitHub <i data-lucide="arrow-up-right"></i></a>
       <a href="#contact" class="btn btn-outline">Get in touch</a>
     </div>
   </div>
@@ -794,7 +796,7 @@ footer a { color: var(--accent); text-decoration: none; }
           <li><strong>Confidentiality:</strong> strictly confidential. All code, architecture, and data are the exclusive property of the company.</li>
         </ul>
         <div class="proj-row-links">
-          <a href="reports/KYM_Report.pdf" target="_blank" class="proj-link proj-link-btn">📄 Report (PDF)</a>
+          <a href="reports/KYM_Report.pdf" target="_blank" class="proj-link proj-link-btn"><i data-lucide="file-text"></i> Report (PDF)</a>
         </div>
       </div>
 
@@ -805,9 +807,9 @@ footer a { color: var(--accent); text-decoration: none; }
         </div>
         <p class="proj-desc">Research implementation of Discontinuous Galerkin formulations on pyramid-type elements. Literature review, mathematical derivation of DG schemes, C++ integration into the open-source GEOS simulator, and full technical documentation authored from scratch.</p>
         <div class="proj-row-links">
-          <a href="reports/DG_Methods_on_Pyramid_Meshes_Report.pdf" target="_blank" class="proj-link proj-link-btn">📄 Report (PDF)</a>
-          <a href="https://github.com/GEOS-DEV/GEOS" target="_blank" class="proj-link">GEOS repo ↗</a>
-          <a href="https://github.com/royerju64" target="_blank" class="proj-link">My contributions ↗</a>
+          <a href="reports/DG_Methods_on_Pyramid_Meshes_Report.pdf" target="_blank" class="proj-link proj-link-btn"><i data-lucide="file-text"></i> Report (PDF)</a>
+          <a href="https://github.com/GEOS-DEV/GEOS" target="_blank" class="proj-link">GEOS repo <i data-lucide="arrow-up-right"></i></a>
+          <a href="https://github.com/royerju64" target="_blank" class="proj-link">My contributions <i data-lucide="arrow-up-right"></i></a>
         </div>
       </div>
 
@@ -818,8 +820,8 @@ footer a { color: var(--accent); text-decoration: none; }
         </div>
         <p class="proj-desc">The aim of this project is to develop a <strong>GPU-accelerated 2D particle simulator</strong> capable of handling thousands to millions of interacting particles in real time, with the objective of simulating fluids. This project is based on a personal C++ particle simulator project using the <strong>Verlet integration method</strong>, implemented on a CPU.</p>
         <div class="proj-row-links">
-          <a href="reports/GPU_Computing_Project.pdf" target="_blank" class="proj-link proj-link-btn">📄 Report (PDF)</a>
-          <a href="https://github.com/RoyerJu64/Particle_Simulation_GPU_Project" target="_blank" class="proj-link">GitHub ↗</a>
+          <a href="reports/GPU_Computing_Project.pdf" target="_blank" class="proj-link proj-link-btn"><i data-lucide="file-text"></i> Report (PDF)</a>
+          <a href="https://github.com/RoyerJu64/Particle_Simulation_GPU_Project" target="_blank" class="proj-link">GitHub <i data-lucide="arrow-up-right"></i></a>
         </div>
       </div>
 
@@ -830,8 +832,8 @@ footer a { color: var(--accent); text-decoration: none; }
         </div>
         <p class="proj-desc">Diffusion models are powerful generative models but are often associated with high computational costs due to their iterative structure. This report presents a <strong>performance analysis</strong> of tiny-diffusion, a minimal PyTorch implementation of probabilistic diffusion models operating on low-dimensional 2D datasets. By combining Python-level and system-level profiling (<strong>cProfile, Hyperfine</strong>) with framework-level profiling (<strong>PyTorch Profiler</strong>), we identify computational bottlenecks during training. The goal is to characterize the performance structure of diffusion models in a controlled setting and to extract actionable optimization insights.</p>
         <div class="proj-row-links">
-          <a href="reports/Performance_Analysis_Report.pdf" target="_blank" class="proj-link proj-link-btn">📄 Report (PDF)</a>
-          <a href="https://github.com/FAR3L/tiny-diffusion" target="_blank" class="proj-link">GitHub ↗</a>
+          <a href="reports/Performance_Analysis_Report.pdf" target="_blank" class="proj-link proj-link-btn"><i data-lucide="file-text"></i> Report (PDF)</a>
+          <a href="https://github.com/FAR3L/tiny-diffusion" target="_blank" class="proj-link">GitHub <i data-lucide="arrow-up-right"></i></a>
         </div>
       </div>
 
@@ -842,7 +844,7 @@ footer a { color: var(--accent); text-decoration: none; }
         </div>
         <p class="proj-desc">Design, implementation, and training of a <strong>Deep Q-Network (DQN) agent</strong> for autonomous sailing navigation in dynamic wind fields. The agent must navigate from a starting position to a goal location while <strong>optimally exploiting wind patterns</strong>. We describe our architectural choices, feature engineering approach, training methodology, and provide a detailed performance analysis.</p>
         <div class="proj-row-links">
-          <a href="reports/RL_Sailing_Project_Report.pdf" target="_blank" class="proj-link proj-link-btn">📄 Report (PDF)</a>
+          <a href="reports/RL_Sailing_Project_Report.pdf" target="_blank" class="proj-link proj-link-btn"><i data-lucide="file-text"></i> Report (PDF)</a>
         </div>
       </div>
 
