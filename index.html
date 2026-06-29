@@ -125,12 +125,14 @@ h1.hero-name {
   letter-spacing: var(--tracking-display);
   color: var(--ink);
 }
-h1.hero-name em {
+h1.hero-name em,
+h1.hero-name .hero-name-accent {
   font-style: italic;
   color: var(--accent);
   -webkit-text-fill-color: currentColor;
   background: none;
 }
+h1.hero-name .hero-name-accent { font-style: normal; }
 .hero-bio {
   font-size: var(--step-0);
   color: var(--ink-2);
@@ -219,6 +221,11 @@ h1.hero-name em {
   border: var(--border);
   background: var(--accent-tint);
   font-size: 13px;
+  color: var(--accent);
+}
+.hero-card-icon svg {
+  width: 15px; height: 15px;
+  stroke-width: 1.75;
 }
 .hero-card-info { line-height: 1.4; }
 .hero-card-info strong { display: block; font-weight: 600; color: var(--ink); }
@@ -499,7 +506,7 @@ h2.section-title {
 .contact-intro {
   font-family: var(--font-display);
   font-size: var(--step-2);
-  font-style: italic;
+  font-style: normal;
   color: var(--ink);
   margin-bottom: var(--space-5);
   line-height: var(--lh-tight);
@@ -569,7 +576,7 @@ footer a { color: var(--accent); text-decoration: none; }
         <img src="photo.png" alt="Julien Royer" class="hero-photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="hero-avatar">JR</div>
       </div>
-      <h1 class="hero-name">Julien <em>Royer</em></h1>
+      <h1 class="hero-name">Julien <span class="hero-name-accent">Royer</span></h1>
     </div>
     <p class="hero-bio">
       Currently at Thales Alenia Space, I work on the integration of advanced AI solutions into operational industrial processes in the aerospace sector. I hold a double degree in <strong>Intelligent Systems Engineering</strong> and a <strong>Master in Artificial Intelligence</strong> — a research-oriented program focused on the foundations and advanced methods of machine learning. I am particularly interested in the theoretical foundations of ML, as well as their adaptation and integration into complex industrial environments.
@@ -584,35 +591,35 @@ footer a { color: var(--accent); text-decoration: none; }
   <div class="hero-right">
     <div class="hero-card">
       <div class="hero-card-row">
-        <div class="hero-card-icon">✦</div>
+        <div class="hero-card-icon"><i data-lucide="sparkles"></i></div>
         <div class="hero-card-info">
           <strong>Interests</strong>
           <span>Agentic AI · Applied ML · Computer Vision</span>
         </div>
       </div>
       <div class="hero-card-row">
-        <div class="hero-card-icon">🚀</div>
+        <div class="hero-card-icon"><i data-lucide="rocket"></i></div>
         <div class="hero-card-info">
           <strong>Thales Alenia Space</strong>
           <span>Current position · Toulouse</span>
         </div>
       </div>
       <div class="hero-card-row">
-        <div class="hero-card-icon">🎓</div>
+        <div class="hero-card-icon"><i data-lucide="graduation-cap"></i></div>
         <div class="hero-card-info">
           <a href="https://ensimag.grenoble-inp.fr/" target="_blank" class="hero-card-link"><strong>ENSIMAG</strong></a>
           <span>Master of Artificial Intelligence</span>
         </div>
       </div>
       <div class="hero-card-row">
-        <div class="hero-card-icon">🎓</div>
+        <div class="hero-card-icon"><i data-lucide="graduation-cap"></i></div>
         <div class="hero-card-info">
           <a href="https://ense3.grenoble-inp.fr/" target="_blank" class="hero-card-link"><strong>ENSE3</strong></a>
           <span>Intelligent Systems Engineering</span>
         </div>
       </div>
       <div class="hero-card-row">
-        <div class="hero-card-icon">🌍</div>
+        <div class="hero-card-icon"><i data-lucide="languages"></i></div>
         <div class="hero-card-info">
           <strong>FR / EN / ES</strong>
           <span>Trilingual</span>
@@ -680,7 +687,7 @@ footer a { color: var(--accent); text-decoration: none; }
         </div>
         <div class="tl-company">
           SOFRESID Engineering
-          <span class="tl-loc">· Pau, France 🏭</span>
+          <span class="tl-loc">· Pau, France</span>
         </div>
         <p class="tl-desc">Wrote calculation methods and sizing programs for valve engineering, applied to live Chemical industry projects. First professional experience with real industrial constraints, norms, and the gap between textbook and field engineering.</p>
         <div class="tl-tags">
@@ -716,7 +723,6 @@ footer a { color: var(--accent); text-decoration: none; }
           <li>Mathematical Optimisation</li>
           <li>AI Ethics</li>
         </ul>
-        <div class="edu-grade">GPA equivalent: 15.5 / 20</div>
       </div>
       <div class="edu-card reveal edu-ense3">
         <div class="edu-logo-row">
@@ -750,6 +756,7 @@ footer a { color: var(--accent); text-decoration: none; }
       </div>
       <div class="edu-card reveal edu-prepa">
         <div class="edu-logo-row">
+          <img src="assets/laprepadesinp.png" alt="La Prépa des INP" class="edu-logo edu-logo-wide">
           <div class="edu-period">2021 — 2023</div>
         </div>
         <div class="edu-school">La Prépa des INP — Bordeaux</div>
@@ -852,7 +859,7 @@ footer a { color: var(--accent); text-decoration: none; }
         <h2 class="section-title" style="text-align:center;margin-bottom:1.5rem">Let's work together</h2>
       </div>
       <p class="contact-intro reveal">
-        I'm looking for my next challenge — whether that's a research role, an AI engineering position, or something at the intersection of both.
+        I'm looking for my next challenge, whether that's a research role, an AI engineering position, or something at the intersection of both.
       </p>
       <div class="contact-links reveal">
         <a href="mailto:Julien.Royer1@grenobleinp.org" class="contact-btn">
@@ -1232,5 +1239,7 @@ document.querySelectorAll('.skill-fill').forEach(f => {
 })();
 </script>
 <!-- ============ /ASK-JULIEN CHAT WIDGET ============ -->
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>lucide.createIcons();</script>
 </body>
 </html>
