@@ -465,6 +465,22 @@ h2.section-title {
   background: var(--accent);
 }
 .proj-points strong { font-weight: 600; color: var(--ink); }
+.proj-video { margin: var(--space-3) 0; max-width: var(--measure); }
+.proj-video-title {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: .02em;
+  color: var(--ink);
+  margin-bottom: .4rem;
+}
+.proj-video video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: var(--border);
+  background: #000;
+}
+.proj-video-credit { font-size: .7rem; color: var(--muted); margin-top: .5rem; }
 .proj-row-links { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center; margin-top: var(--space-2); }
 .proj-link {
   font-family: var(--font-mono);
@@ -795,6 +811,14 @@ footer a { color: var(--accent); text-decoration: none; }
           <li><strong>Other Use Cases:</strong> automates Technical Documentation Generation through iterative agent loops, and drives a Failure Segmentation Agent using specialized tool implementations to parse logs and isolate complex system faults.</li>
           <li><strong>Confidentiality:</strong> strictly confidential. All code, architecture, and data are the exclusive property of the company.</li>
         </ul>
+        <div class="proj-video">
+          <p class="proj-video-title">Watch the KYM presentation</p>
+          <video controls preload="metadata" playsinline poster="assets/video/kym-poster.jpg">
+            <source src="assets/video/kym-en-1080p.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <p class="proj-video-credit">This video was made by myself using the Remotion framework.</p>
+        </div>
         <div class="proj-row-links">
           <a href="reports/KYM_Report.pdf" target="_blank" class="proj-link proj-link-btn"><i data-lucide="file-text"></i> Report (PDF)</a>
         </div>
