@@ -315,6 +315,15 @@ h2.section-title {
 }
 .tl-loc { color: var(--muted); font-weight: 400; text-transform: none; letter-spacing: 0; }
 .tl-logo { height: 22px; width: auto; max-width: 160px; object-fit: contain; }
+.tl-logo-side {
+  position: absolute;
+  right: 0;
+  top: 3rem;
+  height: 60px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+}
 .tl-desc { font-size: var(--step-0); color: var(--ink-2); max-width: var(--measure); }
 .tl-desc strong { font-weight: 600; color: var(--ink); }
 .tl-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: var(--space-2); }
@@ -481,6 +490,15 @@ h2.section-title {
   background: #000;
 }
 .proj-video-credit { font-size: .7rem; color: var(--muted); margin-top: .5rem; }
+.proj-image { margin: var(--space-3) 0; max-width: var(--measure); }
+.proj-image img {
+  display: block;
+  width: 55%;
+  height: auto;
+  margin: 0;
+  border: var(--border);
+  background: var(--paper-2);
+}
 .proj-row-links { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center; margin-top: var(--space-2); }
 .proj-link {
   font-family: var(--font-mono);
@@ -568,6 +586,7 @@ footer a { color: var(--accent); text-decoration: none; }
   .nav-links li:not(:last-child) { display: none; }
   .proj-row-head { flex-direction: column; gap: .6rem; }
   .tl-head { flex-direction: column; gap: .15rem; }
+  .tl-logo-side { position: static; height: 44px; margin-bottom: .7rem; }
 }
 </style>
 </head>
@@ -665,8 +684,9 @@ footer a { color: var(--accent); text-decoration: none; }
           <span class="tl-role">AI Engineer</span>
           <span class="tl-date">Feb 2026 — Aug 2026</span>
         </div>
+        <img src="assets/thales.png" alt="Thales Alenia Space" class="tl-logo-side">
         <div class="tl-company">
-          <img src="assets/thales.png" alt="Thales Alenia Space" class="tl-logo">
+          Thales Alenia Space
           <span class="tl-loc">· Internship, Toulouse, France</span>
         </div>
         <p class="tl-desc">Designing end-to-end AI solutions for Integration, Validation and Qualification (IVQ) processes in space systems. Implementing <strong>Agentic Generative AI</strong> pipelines for technical document analysis and generation, automated synthesis, and decision support. The system was <strong>deployed across several engineering services and teams</strong>, and its backend was taken over by the AI department to be turned into a <strong>finished industrial product</strong>.</p>
@@ -684,8 +704,9 @@ footer a { color: var(--accent); text-decoration: none; }
           <span class="tl-role">Research Intern — Numerical Methods</span>
           <span class="tl-date">Jun 2025 — Sep 2025</span>
         </div>
+        <img src="assets/inria.png" alt="INRIA" class="tl-logo-side" style="height:40px;">
         <div class="tl-company">
-          <img src="assets/inria.png" alt="INRIA" class="tl-logo">
+          INRIA
           <span class="tl-loc">· Pau, France</span>
         </div>
         <p class="tl-desc">Analysed and implemented Discontinuous Galerkin (DG) formulations on pyramid-type meshes — a mathematically demanding problem at the frontier of numerical simulation. Conducted literature review, derived the method variants, integrated them into the open-source HPC codebase <strong>GEOS</strong>, and authored the technical documentation. A research experience that sharpened both my theoretical rigour and my ability to contribute to large collaborative codebases.</p>
@@ -830,8 +851,12 @@ footer a { color: var(--accent); text-decoration: none; }
           <span class="proj-status ps-research">Research</span>
         </div>
         <p class="proj-desc">Research implementation of Discontinuous Galerkin formulations on pyramid-type elements. Literature review, mathematical derivation of DG schemes, C++ integration into the open-source GEOS simulator, and full technical documentation authored from scratch.</p>
+        <div class="proj-image">
+          <img src="assets/DG_meshes.jpg" alt="Discontinuous Galerkin methods on pyramid meshes" loading="lazy" />
+        </div>
         <div class="proj-row-links">
           <a href="reports/DG_Methods_on_Pyramid_Meshes_Report.pdf" target="_blank" class="proj-link proj-link-btn"><i data-lucide="file-text"></i> Report (PDF)</a>
+          <a href="reports/Presentation_stage_INRIA.pdf" target="_blank" class="proj-link">Slides <i data-lucide="arrow-up-right"></i></a>
           <a href="https://github.com/GEOS-DEV/GEOS" target="_blank" class="proj-link">GEOS repo <i data-lucide="arrow-up-right"></i></a>
           <a href="https://github.com/royerju64" target="_blank" class="proj-link">My contributions <i data-lucide="arrow-up-right"></i></a>
         </div>
@@ -843,6 +868,9 @@ footer a { color: var(--accent); text-decoration: none; }
           <span class="proj-status ps-academic">Academic</span>
         </div>
         <p class="proj-desc">The aim of this project is to develop a <strong>GPU-accelerated 2D particle simulator</strong> capable of handling thousands to millions of interacting particles in real time, with the objective of simulating fluids. This project is based on a personal C++ particle simulator project using the <strong>Verlet integration method</strong>, implemented on a CPU.</p>
+        <div class="proj-image">
+          <img src="assets/particle_simulation.png" alt="GPU-accelerated particle simulation" loading="lazy" />
+        </div>
         <div class="proj-row-links">
           <a href="reports/GPU_Computing_Project.pdf" target="_blank" class="proj-link proj-link-btn"><i data-lucide="file-text"></i> Report (PDF)</a>
           <a href="https://github.com/RoyerJu64/Particle_Simulation_GPU_Project" target="_blank" class="proj-link">GitHub <i data-lucide="arrow-up-right"></i></a>
@@ -855,6 +883,9 @@ footer a { color: var(--accent); text-decoration: none; }
           <span class="proj-status ps-academic">Academic</span>
         </div>
         <p class="proj-desc">Diffusion models are powerful generative models but are often associated with high computational costs due to their iterative structure. This report presents a <strong>performance analysis</strong> of tiny-diffusion, a minimal PyTorch implementation of probabilistic diffusion models operating on low-dimensional 2D datasets. By combining Python-level and system-level profiling (<strong>cProfile, Hyperfine</strong>) with framework-level profiling (<strong>PyTorch Profiler</strong>), we identify computational bottlenecks during training. The goal is to characterize the performance structure of diffusion models in a controlled setting and to extract actionable optimization insights.</p>
+        <div class="proj-image">
+          <img src="assets/tiny_diffusion.png" alt="Tiny diffusion model performance analysis" loading="lazy" />
+        </div>
         <div class="proj-row-links">
           <a href="reports/Performance_Analysis_Report.pdf" target="_blank" class="proj-link proj-link-btn"><i data-lucide="file-text"></i> Report (PDF)</a>
           <a href="https://github.com/FAR3L/tiny-diffusion" target="_blank" class="proj-link">GitHub <i data-lucide="arrow-up-right"></i></a>
@@ -867,6 +898,9 @@ footer a { color: var(--accent); text-decoration: none; }
           <span class="proj-status ps-academic">Academic</span>
         </div>
         <p class="proj-desc">Design, implementation, and training of a <strong>Deep Q-Network (DQN) agent</strong> for autonomous sailing navigation in dynamic wind fields. The agent must navigate from a starting position to a goal location while <strong>optimally exploiting wind patterns</strong>. We describe our architectural choices, feature engineering approach, training methodology, and provide a detailed performance analysis.</p>
+        <div class="proj-image">
+          <img src="assets/sailing_boat.jpeg" alt="Deep Q-Learning agent for sailing navigation" loading="lazy" />
+        </div>
         <div class="proj-row-links">
           <a href="reports/RL_Sailing_Project_Report.pdf" target="_blank" class="proj-link proj-link-btn"><i data-lucide="file-text"></i> Report (PDF)</a>
         </div>
