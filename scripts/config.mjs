@@ -25,7 +25,7 @@ export const CATEGORIES = [
 export const SETTINGS = {
   mailbox: "[Gmail]/All Mail", // search archived mail too, not just INBOX
   lookbackDays: 10,
-  maxCharsPerNewsletter: 20000, // per-newsletter trim to keep each condense call under 8000 TPM
+  maxCharsPerNewsletter: 14000, // per-newsletter trim: leaves output-token room under 8000 TPM
   model: process.env.GROQ_MODEL || "openai/gpt-oss-120b",
   minArticles: 5,
   maxArticles: 10,

@@ -52,32 +52,41 @@ OUTPUT — a SINGLE JSON object, no markdown:
 Between 5 and 10 articles, highest importance first. Return ONLY the JSON object.`;
 
 async function groqJson({ apiKey, model, system, user, maxTokens }) {
+  const body = {
+    model,
+    temperature: 0.4,
+    max_tokens: maxTokens,
+    response_format: { type: "json_object" },
+    messages: [
+      { role: "system", content: system },
+      { role: "user", content: user },
+    ],
+  };
+  // gpt-oss are reasoning models: keep reasoning cheap so the token budget goes
+  // to the actual JSON output rather than being eaten by the chain of thought.
+  if (/gpt-oss/.test(model)) body.reasoning_effort = "low";
+
   const res = await fetch(GROQ_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
-    body: JSON.stringify({
-      model,
-      temperature: 0.4,
-      max_tokens: maxTokens,
-      response_format: { type: "json_object" },
-      messages: [
-        { role: "system", content: system },
-        { role: "user", content: user },
-      ],
-    }),
+    body: JSON.stringify(body),
   });
   if (!res.ok) {
     const detail = await res.text();
     throw new Error(`Groq error ${res.status}: ${detail.slice(0, 500)}`);
   }
   const data = await res.json();
-  return parseJson(data?.choices?.[0]?.message?.content || "");
+  const choice = data?.choices?.[0];
+  if (choice?.finish_reason === "length") {
+    console.log("    ⚠ output hit max_tokens (may be truncated)");
+  }
+  return parseJson(choice?.message?.content || "");
 }
 
 async function condense(newsletter, { apiKey, model, maxChars }) {
   const user = toLLMBlock(newsletter, maxChars);
   const out = await groqJson({
-    apiKey, model, system: CONDENSE_SYSTEM, user, maxTokens: 1800,
+    apiKey, model, system: CONDENSE_SYSTEM, user, maxTokens: 2600,
   });
   const items = Array.isArray(out?.items) ? out.items : [];
   // Tag every item with the true source name so COMPOSE can't mislabel it.
