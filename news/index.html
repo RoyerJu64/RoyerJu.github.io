@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The AI Gazette — A weekly AI edition by Julien Royer</title>
+<meta name="description" content="The AI Gazette — a weekly, human-readable digest of the most important artificial-intelligence news, curated and written automatically from the best AI newsletters.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  :root {
+    --g-ink:    #141310;                 /* warm near-black          */
+    --g-paper:  var(--paper, #F7F4EC);   /* = site paper             */
+    --g-desk:   #D8D3C6;                 /* darker desk behind sheet */
+    --g-accent: var(--accent, #A8481F);  /* swap to #b3251e for red  */
+    --g-gris:   #56524A;
+    --g-hair:   1px solid var(--g-ink);
+    --f-display:"Playfair Display", Georgia, "Times New Roman", serif;
+    --f-body:   "PT Serif", Georgia, serif;
+    --f-label:  "Oswald", system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--g-desk);
+    font-family: var(--f-body);
+    color: var(--g-ink);
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; }
+  ::selection { background: var(--g-accent); color: var(--g-paper); }
+
+  /* ---------- Site strip (back to portfolio) ---------- */
+  .sitestrip {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1100px; margin: 0 auto; padding: .9rem 2rem .2rem;
+    font-family: var(--f-label);
+    font-size: .7rem; letter-spacing: .12em; text-transform: uppercase;
+  }
+  .sitestrip .brand { text-decoration: none; color: var(--g-ink); }
+  .sitestrip .brand b { color: var(--g-accent); font-weight: 600; }
+  .sitestrip .back { text-decoration: none; color: var(--g-gris); transition: color .15s ease; }
+  .sitestrip .back:hover { color: var(--g-accent); }
+
+  /* ---------- The sheet ---------- */
+  .journal {
+    max-width: 1100px;
+    margin: .4rem auto 3rem;
+    background: var(--g-paper);
+    padding: 1.5rem 2rem 2rem;
+    box-shadow: 0 14px 44px rgba(0,0,0,.30);
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar {
+    display: flex; justify-content: space-between; gap: 2rem;
+    border-bottom: var(--g-hair); padding-bottom: .4rem;
+    font-family: var(--f-label);
+    font-size: .68rem; text-transform: uppercase; letter-spacing: .08em;
+    color: var(--g-gris);
+  }
+  .topbar b { color: var(--g-ink); font-weight: 600; }
+
+  /* ---------- Masthead ---------- */
+  .masthead {
+    border: 3px solid var(--g-ink); outline: 1px solid var(--g-ink); outline-offset: 3px;
+    margin: .95rem 0 .55rem; padding: .7rem 1rem .55rem; text-align: center;
+  }
+  .masthead h1 {
+    font-family: var(--f-display); font-weight: 900;
+    font-size: clamp(2.4rem, 8vw, 5rem);
+    letter-spacing: .03em; text-transform: uppercase; line-height: 1;
+  }
+  .masthead .devise { display: flex; align-items: center; gap: .8rem; margin-top: .5rem; }
+  .masthead .devise::before, .masthead .devise::after { content:""; flex:1; height:4px; background: var(--g-accent); }
+  .masthead .devise span {
+    font-family: var(--f-label); font-size: .7rem; letter-spacing: .4em;
+    text-transform: uppercase; white-space: nowrap; color: var(--g-ink);
+  }
+
+  .subbar {
+    display: flex; justify-content: space-between; gap: 1rem;
+    border-top: var(--g-hair); border-bottom: 3px double var(--g-ink);
+    padding: .32rem 0; margin-bottom: 1.2rem;
+    font-family: var(--f-label);
+    font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
+  }
+  .subbar .price { color: var(--g-accent); white-space: nowrap; }
+
+  /* ---------- Front-page grid ---------- */
+  .une { display: grid; grid-template-columns: 2.1fr 1fr 1.6fr; gap: 1.4rem; }
+  .col + .col { border-left: var(--g-hair); padding-left: 1.4rem; }
+
+  .kicker {
+    font-family: var(--f-label); font-size: .62rem; font-weight: 600;
+    letter-spacing: .2em; text-transform: uppercase; color: var(--g-accent);
+  }
+  h2.lead-title {
+    font-family: var(--f-display); font-weight: 900;
+    font-size: clamp(1.7rem, 3.6vw, 2.7rem); line-height: 1.05;
+    margin: .25rem 0 .4rem;
+  }
+  h3.col-title {
+    font-family: var(--f-display); font-weight: 700;
+    font-size: 1.3rem; line-height: 1.12; margin: 0 0 .35rem;
+  }
+  a.headlink { text-decoration: none; }
+  a.headlink:hover { color: var(--g-accent); }
+
+  .chapo {
+    font-style: italic; color: var(--g-gris); font-size: .86rem;
+    border-bottom: var(--g-hair); padding-bottom: .5rem; margin-bottom: .6rem;
+  }
+  .byline {
+    font-family: var(--f-label); font-size: .63rem; font-weight: 500;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--g-accent);
+    margin-bottom: .5rem;
+  }
+  .source {
+    font-family: var(--f-label); font-size: .6rem;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--g-gris);
+    margin-top: .5rem;
+  }
+  .source a { color: var(--g-accent); text-decoration: none; }
+  .source a:hover { text-decoration: underline; }
+
+  .body { font-size: .83rem; text-align: justify; hyphens: auto; }
+  .body p { margin-bottom: .7rem; }
+  .body.dropcap p:first-of-type::first-letter {
+    font-family: var(--f-display); font-weight: 900;
+    font-size: 3.1em; float: left; line-height: .82;
+    padding: .02em .1em 0 0; color: var(--g-ink);
+  }
+  .twocol { column-count: 2; column-gap: 1.3rem; column-rule: var(--g-hair); }
+
+  /* ---------- Black boxes ---------- */
+  .blackbox { background: var(--g-ink); color: var(--g-paper); padding: .5rem .8rem; margin: 1rem 0 .55rem; }
+  .blackbox .kicker { color: var(--g-paper); opacity: .7; }
+  .blackbox h4 { font-family: var(--f-display); font-weight: 700; font-size: 1.02rem; line-height: 1.1; margin-top: .1rem; }
+  .blackbox a { text-decoration: none; }
+  .blackbox a:hover { color: var(--g-paper); opacity: .85; }
+  .blackbox + .body { font-size: .78rem; }
+
+  /* ---------- Pull quote (why it matters) ---------- */
+  .quote {
+    border-top: 3px solid var(--g-ink); border-bottom: 3px solid var(--g-ink);
+    padding: 1rem .4rem; margin: 1.1rem 0; text-align: center;
+  }
+  .quote::before {
+    content: "\201C"; display: block; font-family: var(--f-display);
+    font-size: 3rem; line-height: .4; color: var(--g-accent); margin-bottom: .45rem;
+  }
+  .quote p { font-family: var(--f-display); font-style: italic; font-size: 1.02rem; line-height: 1.35; }
+  .quote cite {
+    display: block; margin-top: .55rem; font-family: var(--f-label);
+    font-style: normal; font-size: .6rem; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--g-gris);
+  }
+
+  /* ---------- Briefs ---------- */
+  .brief { margin-bottom: .9rem; }
+  .brief h4 { font-family: var(--f-display); font-weight: 700; font-size: .98rem; line-height: 1.14; margin: .1rem 0 .25rem; }
+  .brief p { font-size: .77rem; text-align: justify; hyphens: auto; }
+  .brief + .brief { border-top: 1px dotted var(--g-gris); padding-top: .8rem; }
+
+  /* ---------- Bottom banner ---------- */
+  .bottom {
+    margin-top: 1.4rem; border-top: 3px double var(--g-ink); padding-top: .9rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem;
+  }
+  .bottom .item .blackbox { margin: 0 0 .5rem; }
+  .bottom .item p { font-size: .77rem; text-align: justify; hyphens: auto; }
+
+  .colophon {
+    margin-top: 1.3rem; border-top: var(--g-hair); padding-top: .5rem;
+    text-align: center; font-family: var(--f-label);
+    font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; color: var(--g-gris);
+    line-height: 1.9;
+  }
+  .colophon a { color: var(--g-accent); text-decoration: none; }
+
+  /* ---------- States ---------- */
+  .state { text-align: center; padding: 4rem 1rem; font-family: var(--f-label); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--g-gris); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 820px) {
+    .journal { padding: 1.2rem 1.2rem 1.6rem; }
+    .une { grid-template-columns: 1fr; gap: 1rem; }
+    .col + .col { border-left: none; padding-left: 0; border-top: var(--g-hair); padding-top: 1rem; }
+    .twocol { column-count: 1; }
+    .bottom { grid-template-columns: 1fr; }
+    .topbar { flex-wrap: wrap; gap: .3rem; font-size: .6rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sitestrip">
+  <a class="brand" href="../index.html">Julien <b>Royer</b></a>
+  <a class="back" href="../index.html">← Back to portfolio</a>
+</div>
+
+<main class="journal" id="journal">
+  <div class="state" id="loading">Setting the type for this week&rsquo;s edition&hellip;</div>
+</main>
+
+<script>
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function safeUrl(u){try{const p=new URL(u);return (p.protocol==="http:"||p.protocol==="https:")?p.href:"";}catch{return "";}}
+function headlink(a, text){const u=safeUrl(a.source);return u?`<a class="headlink" href="${u}" target="_blank" rel="noopener">${text}</a>`:text;}
+function sourceLine(a){
+  const u=safeUrl(a.source); const name=a.source_name?esc(a.source_name):"Source";
+  const rt=a.reading_time?` &middot; ${esc(a.reading_time)} read`:"";
+  return `<p class="source">${u?`<a href="${u}" target="_blank" rel="noopener">Read at ${name} &nearr;</a>`:name}${rt}</p>`;
+}
+function issueNumber(dateStr){
+  const d=new Date(dateStr); if(isNaN(d)) return null;
+  const start=Date.UTC(2026,0,4); // first Sunday of 2026
+  const n=Math.floor((d.getTime()-start)/(7*864e5))+1;
+  return n>0?n:null;
+}
+
+function renderLead(a, intro){
+  const chapo = intro ? `<p class="chapo">${esc(intro)}</p>` : "";
+  return `
+    <div class="kicker">${esc(a.category||"Top story")}</div>
+    <h2 class="lead-title">${headlink(a, esc(a.headline))}</h2>
+    ${chapo}
+    <p class="byline">The AI Gazette &middot; Editor&rsquo;s pick</p>
+    <div class="body dropcap twocol"><p>${esc(a.summary)}</p></div>
+    ${sourceLine(a)}
+    ${a.why_it_matters?`<figure class="quote"><p>${esc(a.why_it_matters)}</p><cite>Why it matters</cite></figure>`:""}`;
+}
+function renderBlackboxStory(a){
+  return `
+    <div class="blackbox"><div class="kicker">${esc(a.category||"")}</div><h4>${headlink(a, esc(a.headline))}</h4></div>
+    <div class="body"><p>${esc(a.summary)}</p></div>
+    ${sourceLine(a)}`;
+}
+function renderDossier(a){
+  return `
+    <div class="kicker">${esc(a.category||"Analysis")}</div>
+    <h3 class="col-title">${headlink(a, esc(a.headline))}</h3>
+    <div class="body"><p>${esc(a.summary)}</p></div>
+    ${sourceLine(a)}`;
+}
+function renderBrief(a){
+  return `
+    <div class="brief">
+      <div class="kicker">${esc(a.category||"")}</div>
+      <h4>${headlink(a, esc(a.headline))}</h4>
+      <p>${esc(a.summary)}</p>
+    </div>`;
+}
+function renderBottomItem(a){
+  return `
+    <article class="item">
+      <div class="blackbox"><div class="kicker">${esc(a.category||"")}</div><h4>${headlink(a, esc(a.headline))}</h4></div>
+      <p>${esc(a.summary)}</p>
+      ${sourceLine(a)}
+    </article>`;
+}
+
+function render(data){
+  const root=document.getElementById("journal");
+  const articles=[...(data.articles||[])].sort((a,b)=>(b.importance||0)-(a.importance||0));
+  if(!articles.length){ root.innerHTML=`<div class="state">No edition available yet.</div>`; return; }
+
+  const q=articles.slice();
+  const lead=q.shift();                  // headline story → main column
+  const dossier=q.shift();               // 2nd → right column lead
+  const boxed=q.shift();                 // black-box secondary under the lead
+  const dossierBoxed=q.shift();          // black-box secondary in right column
+  const briefs=q.splice(0,2);            // center column briefs
+  const bottom=q.splice(0,2);            // bottom banner (may be empty)
+
+  const cats=[...new Set(articles.map(a=>a.category).filter(Boolean))];
+  const editionLabel=data.edition_label||data.edition||"";
+  const readingTime=data.reading_time?esc(data.reading_time)+" read":"";
+  const issue=issueNumber(data.edition);
+
+  let html=`
+    <div class="topbar">
+      <span>${issue?`<b>Edition N° ${issue}</b> — `:""}An automated weekly by Julien Royer</span>
+      <span>${esc(editionLabel)}</span>
+      <span>${readingTime||"AI &amp; machine learning"}</span>
+    </div>
+
+    <header class="masthead">
+      <h1>The AI Gazette</h1>
+      <div class="devise"><span>All the intelligence that&rsquo;s fit to print</span></div>
+    </header>
+
+    <div class="subbar">
+      <span>${cats.length?cats.map(esc).join(" &nbsp;&middot;&nbsp; "):"Artificial Intelligence"}</span>
+      <span class="price">Free edition</span>
+    </div>
+
+    <div class="une">
+      <section class="col">
+        ${renderLead(lead, data.intro)}
+        ${boxed?renderBlackboxStory(boxed):""}
+      </section>
+
+      <section class="col">
+        <div class="blackbox"><h4>More this week</h4></div>
+        ${briefs.length?briefs.map(renderBrief).join(""):`<p class="body">More stories next Sunday.</p>`}
+      </section>
+
+      <section class="col">
+        ${dossier?renderDossier(dossier):""}
+        ${dossierBoxed?renderBlackboxStory(dossierBoxed):""}
+      </section>
+    </div>
+
+    ${bottom.length?`<footer class="bottom">${bottom.map(renderBottomItem).join("")}</footer>`:""}
+
+    <div class="colophon">
+      The AI Gazette is set automatically every Sunday from <b>The Batch</b> (DeepLearning.AI) and <b>Import AI</b> (Jack Clark).<br>
+      Stories are selected, merged and written by a language model &middot; A side project by <a href="../index.html">Julien Royer</a>
+    </div>`;
+
+  root.innerHTML=html;
+}
+
+fetch("latest.json",{cache:"no-cache"})
+  .then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
+  .then(render)
+  .catch(()=>{document.getElementById("journal").innerHTML=`<div class="state">This week&rsquo;s edition isn&rsquo;t available right now. Please check back soon.</div>`;});
+</script>
+</body>
+</html>

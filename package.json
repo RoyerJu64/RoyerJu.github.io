@@ -1,0 +1,19 @@
+{
+  "name": "julien-royer-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Personal portfolio of Julien Royer, with an embedded Ask-Julien AI assistant (Groq + serverless) and The AI Gazette, an automatically generated weekly AI newspaper.",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "news": "node scripts/generate-news.mjs",
+    "news:dry": "node scripts/generate-news.mjs --dry-run"
+  },
+  "dependencies": {
+    "imapflow": "^1.0.164",
+    "mailparser": "^3.7.1",
+    "node-html-parser": "^6.1.13"
+  }
+}

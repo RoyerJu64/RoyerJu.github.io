@@ -1,0 +1,47 @@
+name: The AI Gazette
+
+on:
+  schedule:
+    - cron: "0 8 * * 0" # every Sunday at 08:00 UTC
+  workflow_dispatch: {} # allow manual runs from the Actions tab
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ai-gazette
+  cancel-in-progress: false
+
+jobs:
+  build-edition:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Generate the weekly edition
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: node scripts/generate-news.mjs
+
+      - name: Commit & push the new edition
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add news/
+          if git diff --cached --quiet; then
+            echo "No change in this run — nothing to commit."
+            exit 0
+          fi
+          git commit -m "news: The AI Gazette edition $(date -u +%Y-%m-%d)"
+          git push
