@@ -6,6 +6,29 @@ import { ImapFlow } from "imapflow";
 import { simpleParser } from "mailparser";
 
 /**
+ * Resolve the "All Mail" folder regardless of the account language.
+ * Gmail localizes folder names ("[Gmail]/All Mail", "[Gmail]/Tous les messages", …)
+ * but always exposes the special-use flag \All. Fall back to INBOX.
+ */
+async function resolveAllMailPath(client, preferred) {
+  try {
+    const boxes = await client.list();
+    const all = boxes.find(
+      (b) => b.specialUse === "\\All" || (b.flags && b.flags.has && b.flags.has("\\All"))
+    );
+    if (all?.path) return all.path;
+
+    const names = new Set(boxes.map((b) => b.path));
+    for (const cand of [preferred, "[Gmail]/All Mail", "[Google Mail]/All Mail"]) {
+      if (names.has(cand)) return cand;
+    }
+  } catch {
+    /* fall through to INBOX */
+  }
+  return "INBOX";
+}
+
+/**
  * @param {Array<{id:string, source_name:string, homepage:string, from:string}>} sources
  * @param {{user:string, pass:string, mailbox:string, lookbackDays:number}} opts
  * @returns {Promise<Array<{id, source_name, homepage, found:boolean, subject?, date?, html?, text?}>>}
@@ -20,9 +43,21 @@ export async function fetchNewsletters(sources, { user, pass, mailbox, lookbackD
   });
 
   const results = [];
-  await client.connect();
+
   try {
-    const lock = await client.getMailboxLock(mailbox);
+    await client.connect();
+  } catch (e) {
+    const detail = e?.responseText || e?.response || e?.message || String(e);
+    throw new Error(
+      `IMAP login failed (${detail}). Check: 2FA enabled, an *App Password* (not the account password), ` +
+      `and IMAP turned on in Gmail → Settings → Forwarding and POP/IMAP.`
+    );
+  }
+
+  try {
+    const path = await resolveAllMailPath(client, mailbox);
+    console.log(`  · using mailbox: ${path}`);
+    const lock = await client.getMailboxLock(path);
     try {
       const since = new Date(Date.now() - lookbackDays * 864e5);
       for (const src of sources) {
@@ -44,7 +79,7 @@ export async function fetchNewsletters(sources, { user, pass, mailbox, lookbackD
             text: parsed.text || "",
           });
         } catch (e) {
-          results.push({ ...src, found: false, error: String(e).slice(0, 200) });
+          results.push({ ...src, found: false, error: e?.responseText || String(e).slice(0, 200) });
         }
       }
     } finally {
