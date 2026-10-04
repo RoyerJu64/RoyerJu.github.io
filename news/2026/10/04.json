@@ -1,0 +1,79 @@
+{
+  "edition": "2026-10-04",
+  "edition_label": "Sunday, October 4, 2026",
+  "reading_time": "12 min",
+  "intro": "Open‑weight models made strides in multimodal performance and security, while Google explored space‑based AI compute and robotics researchers called for standardized fine‑tuning.",
+  "generated_at": "2026-10-04T13:45:06.299Z",
+  "articles": [
+    {
+      "headline": "Xiaomi's MiMo‑V2.6 models set new open‑weight multimodal performance record",
+      "summary": "Xiaomi unveiled the 1.02‑trillion‑parameter MiMo‑V2.6‑Pro‑RL and the 309‑billion‑parameter MiMo‑V2.6‑Flash, which top the Intelligence and Vals composite benchmarks across text, image, video, and audio tasks. Both models support up to one‑million token contexts and achieve the highest scores among open‑weight systems, narrowing the gap with proprietary offerings while remaining cost‑effective.",
+      "why_it_matters": "The results establish a new baseline for open‑weight multimodal AI, encouraging broader adoption and competition with closed‑source leaders.",
+      "category": "LLM",
+      "importance": 9.2,
+      "reading_time": "2 min",
+      "source": "https://mimo.xiaomi.com/mimo-v2-6",
+      "source_name": "The Batch"
+    },
+    {
+      "headline": "Anthropic shows open‑weight GLM‑5.3 rivals closed‑source Mythos in exploit discovery",
+      "summary": "Anthropic evaluated GLM‑5.3 on the ExploitBench suite, achieving a 12 % success rate—close to the 14 % of the proprietary Mythos model. The study also identified a Chrome vulnerability that could be exploited for a token cost of $20.40, highlighting the defensive and offensive capabilities of open models in cybersecurity.",
+      "why_it_matters": "Demonstrating comparable exploit‑finding ability underscores both the promise and the risk of openly available models in security contexts.",
+      "category": "Research",
+      "importance": 8.9,
+      "reading_time": "2 min",
+      "source": "https://www.anthropic.com/research/glm-5-3-and-the-spread-of-advanced-cyber-capabilities",
+      "source_name": "The Batch"
+    },
+    {
+      "headline": "Google tests TPUs for orbital AI training under Project Suncatcher",
+      "summary": "Google’s Tensor Processing Units have passed g‑force and radiation qualification and are scheduled for a SpaceX rideshare launch. The company plans to operate TPUs in vacuum, using solar power to run full AI training workloads in orbit, aiming to expand compute capacity beyond Earth’s energy constraints.",
+      "why_it_matters": "Space‑based AI compute could dramatically increase available training power while reducing terrestrial energy consumption.",
+      "category": "Business",
+      "importance": 8.5,
+      "reading_time": "2 min",
+      "source": "https://substack.com/redirect/410c90ee-d869-440c-a5a8-2581c591437d?j=eyJ1IjoiN25weXBvIn0.Mt4BEDDXrM3k_L3aoyx28a-LFasSvXPtP8RvEI7UqtU",
+      "source_name": "Import AI"
+    },
+    {
+      "headline": "OpenWorker adopts Nvidia safety framework to harden AI agent sandboxes",
+      "summary": "Andrew Ng’s OpenWorker platform now incorporates Nvidia’s latest safety framework, providing enhanced monitoring, isolation, and resource controls for agents that execute security‑related workflows. The integration aims to prevent rogue behavior while maintaining performance.",
+      "why_it_matters": "Improved sandboxing is essential as autonomous agents become more capable and are deployed in sensitive environments.",
+      "category": "Agents",
+      "importance": 8,
+      "reading_time": "1 min",
+      "source": "https://openworker.com/",
+      "source_name": "The Batch"
+    },
+    {
+      "headline": "DeepSeek launches Flash model with reduced cache footprint for edge devices",
+      "summary": "DeepSeek’s new Flash variant trims memory cache requirements, allowing faster inference on hardware with limited RAM while preserving competitive benchmark performance. The change targets developers seeking high‑quality language models on edge platforms.",
+      "why_it_matters": "Lower resource demands broaden access to powerful models beyond data‑center environments.",
+      "category": "LLM",
+      "importance": 7.8,
+      "reading_time": "1 min",
+      "source": "https://api-docs.deepseek.com/news/news260910",
+      "source_name": "The Batch"
+    },
+    {
+      "headline": "Xiaomi open‑sources 7,000 RL environments and training pipeline for MiMo models",
+      "summary": "Alongside its new MiMo models, Xiaomi released thousands of reinforcement‑learning environments, the full RL training pipeline, and cost estimates ($2.6 M for Pro, $0.9 M for Flash). The resources enable reproducibility and lower the barrier for researchers building high‑performing agents.",
+      "why_it_matters": "Open RL tooling accelerates community progress and democratizes the development of sophisticated agents.",
+      "category": "Open Source",
+      "importance": 7.5,
+      "reading_time": "2 min",
+      "source": "https://www.alphaxiv.org/abs/2609.mimo-scaling-reinforcement-learning",
+      "source_name": "The Batch"
+    },
+    {
+      "headline": "Robotics community calls for universal post‑training fine‑tuning recipe",
+      "summary": "Perry Dong and Chelsea Finn argue that robotics lacks a stable, scalable fine‑tuning method comparable to LLMs’ instruction tuning. They propose EXPO‑FT as a first step toward a universal post‑training protocol that could standardize robot learning pipelines.",
+      "why_it_matters": "A common fine‑tuning approach would enable broader deployment of adaptable robots across industries.",
+      "category": "Robotics",
+      "importance": 7.2,
+      "reading_time": "1 min",
+      "source": "https://substack.com/redirect/39935f60-f533-44ed-9c0b-394acdda3dd1?j=eyJ1IjoiN25weXBvIn0.Mt4BEDDXrM3k_L3aoyx28a-LFasSvXPtP8RvEI7UqtU",
+      "source_name": "Import AI"
+    }
+  ]
+}
