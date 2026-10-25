@@ -1,78 +1,88 @@
 {
-  "edition": "2026-10-18",
-  "edition_label": "Sunday, October 18, 2026",
-  "reading_time": "6 min",
-  "intro": "This week saw rapid advances in large‑language models, new benchmarks exposing multimodal gaps, and strategic moves in AI hardware and governance.",
-  "generated_at": "2026-10-18T12:29:39.847Z",
+  "edition": "2026-10-25",
+  "edition_label": "Sunday, October 25, 2026",
+  "reading_time": "12 min",
+  "intro": "This week saw major strides in open‑weight multimodal models, AI‑driven scientific breakthroughs, and growing regulatory focus on AI tools for minors.",
+  "generated_at": "2026-10-25T13:00:29.600Z",
   "articles": [
     {
-      "headline": "Anthropic rolls out Claude Haiku 5.5, a faster low‑cost LLM",
-      "summary": "Anthropic introduced Claude Haiku 5.5, replacing the 4.5 version with a token throughput of 237 t/s and improved benchmark scores while maintaining its low per‑token pricing. The model targets developers needing high‑speed inference for simple tasks such as summarisation and classification, expanding the portfolio of affordable LLM options.",
-      "why_it_matters": "A cheaper, high‑throughput model lowers barriers for small‑scale developers and broadens the ecosystem of cost‑effective AI services.",
-      "category": "LLM",
+      "headline": "Meta releases open‑weight Muse Spark Open, the first multimodal model with video and audio support",
+      "summary": "Meta unveiled three Muse models—Wonder, Wonder Full, and Spark Open. Spark Open’s weights are freely available, run on consumer‑grade hardware and are licensed for commercial use up to $20 M revenue. The model processes text, images, video and audio across up to one million tokens, marking the first open‑weight system with full video/audio capability.",
+      "why_it_matters": "It lowers the barrier for developers to build sophisticated multimodal applications without costly licensing, accelerating ecosystem growth.",
+      "category": "Open Source",
       "importance": 9.2,
-      "reading_time": "1 min",
-      "source": "https://www.anthropic.com/claude-haiku-5-5",
-      "source_name": "The Batch | Import AI"
+      "reading_time": "2 min",
+      "source": "https://research.meta.ai/blog/muse-wonder",
+      "source_name": "The Batch"
     },
     {
-      "headline": "Claude Sonnet 5.5 adds adaptive reasoning for code‑centric agents",
-      "summary": "Anthropic's Claude Sonnet 5.5 arrives with adaptive reasoning levels, enhanced tool‑use capabilities, and top placement on Artificial Analysis’s Coding Agent Index. While higher reasoning tiers cost more per task, the model sets a new performance baseline for routine coding and office‑automation agents.",
-      "why_it_matters": "It demonstrates the trade‑off between cost and accuracy that developers must manage when deploying LLM‑powered agents for productivity tasks.",
-      "category": "Agents",
+      "headline": "Claude Opus 5.5 tops advanced scientific exams, outpacing human experts",
+      "summary": "Anthropic’s Claude Opus 5.5 achieved 67.7% on the Humanity’s Last Exam and 98% on TheoPhysEval, demonstrating AI performance that exceeds top human specialists on frontier scientific assessments. The results underscore rapid advances in AI reasoning and domain‑specific knowledge.",
+      "why_it_matters": "Such capabilities suggest AI could become a primary tool for high‑impact research, reshaping how scientific problems are tackled.",
+      "category": "Research",
+      "importance": 9,
+      "reading_time": "2 min",
+      "source": "https://substack.com/app-link/post?publication_id=1317673&post_id=221013755&isFreemail=true&r=7npypo&token=eyJ1c2VyX2lkIjo0NjMxMDU3ODgsInBvc3RfaWQiOjIyMTAxMzc1NSwiaWF0IjoxNzkyNDEzNDA5LCJleHAiOjE3OTUwMDU0MDksImlzcyI6InB1Yi0xMzE3NjczIiwic3ViIjoicG9zdC1yZWFjdGlvbiJ9.WiW1BJNFlJH5IzOI2RPDA2w85UqGHuDBoyMeJlHK7KM",
+      "source_name": "Import AI"
+    },
+    {
+      "headline": "FrontierMath benchmark shows AI solving 94% of hard math problems",
+      "summary": "Since its 2024 launch, AI systems have improved their FrontierMath scores from 2% to 94%, reflecting dramatic gains in mathematical reasoning. The benchmark tests a wide range of challenging problems across algebra, calculus, and discrete mathematics.",
+      "why_it_matters": "High performance on rigorous math tasks signals that AI is becoming a reliable partner for quantitative research and education.",
+      "category": "Research",
       "importance": 8.7,
       "reading_time": "1 min",
-      "source": "https://www.anthropic.com/claude-sonnet-5-5",
-      "source_name": "The Batch | Import AI"
+      "source": "https://substack.com/app-link/post?publication_id=1317673&post_id=221013755&isFreemail=true&r=7npypo&token=eyJ1c2VyX2lkIjo0NjMxMDU3ODgsInBvc3RfaWQiOjIyMTAxMzc1NSwiaWF0IjoxNzkyNDEzNDA5LCJleHAiOjE3OTUwMDU0MDksImlzcyI6InB1Yi0xMzE3NjczIiwic3ViIjoicG9zdC1yZWFjdGlvbiJ9.WiW1BJNFlJH5IzOI2RPDA2w85UqGHuDBoyMeJlHK7KM",
+      "source_name": "Import AI"
     },
     {
-      "headline": "Mistral Large 4 (\"le Chonk\") leads European open‑weight LLMs for security work",
-      "summary": "Mistral unveiled Large 4, a 1.05 trillion‑parameter mixture‑of‑experts model supporting up to 1 M tokens. In the CyberGym‑E2E benchmark it achieved an 82 % score, the highest among publicly available models, and is positioned as Europe’s strategic asset for cybersecurity workloads.",
-      "why_it_matters": "The model strengthens European AI sovereignty in a critical domain, offering a home‑grown alternative to dominant US and Chinese offerings.",
-      "category": "LLM",
-      "importance": 8.4,
+      "headline": "U.S. Congress moves forward with the GUARD Act targeting AI risks to minors",
+      "summary": "The Guarding Under‑aged Users from Risky Data (GUARD) Act proposes stricter age verification, content limits, and reporting obligations for AI services used by children. The bill passed the Senate committee and is slated for floor debate.",
+      "why_it_matters": "If enacted, the legislation will impose new compliance burdens on AI providers and could set a precedent for global AI safety standards for youth.",
+      "category": "Regulation",
+      "importance": 8.5,
       "reading_time": "1 min",
-      "source": "https://mistral.ai/news/mistral-large-4/",
-      "source_name": "The Batch | Import AI"
+      "source": "https://www.congress.gov/bill/119th-congress/senate-bill/3062",
+      "source_name": "The Batch"
     },
     {
-      "headline": "NVIDIA launches DGX Spark desktop for on‑premise AI agents",
-      "summary": "NVIDIA announced the DGX Spark, a desktop‑sized system delivering 1 petaflop of compute power. Designed for fine‑tuning and inference of local AI agents, the platform aims to reduce dependence on cloud resources for edge AI workloads.",
-      "why_it_matters": "Providing petaflop‑class compute at the desk level enables developers to experiment with large models locally, accelerating prototyping and improving data‑privacy control.",
-      "category": "Research",
+      "headline": "ChatGPT for Teens adds college‑planning tools amid safety concerns",
+      "summary": "OpenAI introduced a College Planner, flashcards, quizzes, Study Mode, and parental controls such as Quiet Hours for its ChatGPT for Teens product. The features aim to support academic planning while employing age‑prediction classifiers to limit risky content.",
+      "why_it_matters": "The rollout illustrates how AI companies are expanding into education for minors, a market under heightened scrutiny.",
+      "category": "Business",
       "importance": 8,
       "reading_time": "1 min",
-      "source": "https://www.marktechpost.com/2026/10/02/nvidia-announces-dgx-spark-64gb-a-1-petaflop-grace-blackwell-desktop-for-local-ai-agents-fine-tuning-and-inference/",
-      "source_name": "The Batch | Import AI"
+      "source": "https://openai.com/index/teens-learn-and-plan/",
+      "source_name": "The Batch"
     },
     {
-      "headline": "Humanity’s Sixth Sense benchmark highlights multimodal reasoning gap",
-      "summary": "Elorian and Scale AI released the HSS benchmark, comprising 522 image and video questions that test temporal, spatial, social and abstract reasoning. Humans achieve ~93 % pass@1, while GPT‑6 Astra scores 53.6 % and Chinese open‑weight models fall below 27 %.",
-      "why_it_matters": "The results underline persistent shortcomings in visual‑reasoning AI, informing safety assessments and future research priorities for multimodal systems.",
+      "headline": "Common Sense Media rates ChatGPT for Teens as high‑risk",
+      "summary": "The child‑safety nonprofit gave OpenAI’s teen‑focused ChatGPT its lowest grade, citing gaps in content moderation, data privacy, and potential self‑harm triggers. The assessment adds pressure on regulators and parents.",
+      "why_it_matters": "Negative third‑party evaluations can influence policy decisions and public trust in AI‑driven educational tools.",
+      "category": "Regulation",
+      "importance": 7.8,
+      "reading_time": "1 min",
+      "source": "https://institute.commonsensemedia.org/risk-assessments/chatgpt-teens",
+      "source_name": "The Batch"
+    },
+    {
+      "headline": "Reflection AI partners with Nvidia to accelerate 501‑billion‑parameter Beam model",
+      "summary": "Reflection’s Beam, a 501‑billion‑parameter multimodal system, will be run on Nvidia’s latest GPUs, targeting improved scores on vision‑language benchmarks. The collaboration underscores the importance of hardware advances for scaling multimodal AI.",
+      "why_it_matters": "Access to cutting‑edge GPU infrastructure enables startups to compete with large incumbents on complex multimodal tasks.",
       "category": "Vision",
-      "importance": 7.6,
+      "importance": 7.5,
       "reading_time": "1 min",
-      "source": "https://substack.com/redirect/24139061-f3ea-42f4-9c9e-f282fcdb05c7?j=eyJ1IjoiN25weXBvIn0.Mt4BEDDXrM3k_L3aoyx28a-LFasSvXPtP8RvEI7UqtU",
-      "source_name": "Import AI"
+      "source": "https://reflection.ai/blog/introducing-beam",
+      "source_name": "The Batch"
     },
     {
-      "headline": "TasteVal benchmark shows AI research creativity accelerating",
-      "summary": "P‑Zero Research’s TasteVal evaluates models on eight frontier‑AI tasks, finding that experimental research taste has doubled roughly every three months since December 2025. Opus 5.5 outperforms human experts with about 2.3× compute efficiency.",
-      "why_it_matters": "Rapid gains in AI’s ability to select and design research problems suggest progress toward recursive self‑improvement, a key milestone for advanced AI systems.",
-      "category": "Research",
-      "importance": 7.3,
+      "headline": "AI‑driven robots automate laboratory experiments across materials science",
+      "summary": "New AI‑controlled robotic platforms can remotely operate lab equipment, automating synthesis, testing, and characterization in batteries, fuel cells, and other materials. The systems integrate vision, reinforcement learning, and real‑time analytics.",
+      "why_it_matters": "Automation reduces experimental turnaround time, accelerating discovery cycles and lowering research costs.",
+      "category": "Robotics",
+      "importance": 7.2,
       "reading_time": "1 min",
-      "source": "https://substack.com/redirect/8419370a-c5c1-4ef9-a1f7-85c1ee4c9e64?j=eyJ1IjoiN25weXBvIn0.Mt4BEDDXrM3k_L3aoyx28a-LFasSvXPtP8RvEI7UqtU",
-      "source_name": "Import AI"
-    },
-    {
-      "headline": "US national labs demonstrate federated training of LLaMA‑based models",
-      "summary": "Sandia, LLNL and LANL jointly trained LLaMA 3.x models up to 70 B parameters using AMD MI300A and NVIDIA H100 GPUs, employing federated frameworks (NVFlare, Flower, APPFL) to keep classified data on‑site while scaling compute across three facilities.",
-      "why_it_matters": "The effort shows a viable path for secure, collaborative AI development within government, setting a precedent for future large‑scale, classified model training.",
-      "category": "Business",
-      "importance": 7,
-      "reading_time": "1 min",
-      "source": "https://substack.com/redirect/3e806c06-4677-4ab3-9e87-b2d61b8a904e?j=eyJ1IjoiN25weXBvIn0.Mt4BEDDXrM3k_L3aoyx28a-LFasSvXPtP8RvEI7UqtU",
+      "source": "https://substack.com/app-link/post?publication_id=1317673&post_id=221013755&isFreemail=true&r=7npypo&token=eyJ1c2VyX2lkIjo0NjMxMDU3ODgsInBvc3RfaWQiOjIyMTAxMzc1NSwiaWF0IjoxNzkyNDEzNDA5LCJleHAiOjE3OTUwMDU0MDksImlzcyI6InB1Yi0xMzE3NjczIiwic3ViIjoicG9zdC1yZWFjdGlvbiJ9.WiW1BJNFlJH5IzOI2RPDA2w85UqGHuDBoyMeJlHK7KM",
       "source_name": "Import AI"
     }
   ]
