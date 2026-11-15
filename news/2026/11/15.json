@@ -1,0 +1,89 @@
+{
+  "edition": "2026-11-15",
+  "edition_label": "Sunday, November 15, 2026",
+  "reading_time": "8 min",
+  "intro": "This week saw AI models moving from text to code and hardware, with breakthroughs in security, model training architectures, and embodied data collection.",
+  "generated_at": "2026-11-15T15:25:25.648Z",
+  "articles": [
+    {
+      "headline": "OpenAI unveils GPT‑6 Cyber, a Linux‑kernel security model",
+      "summary": "OpenAI released GPT‑6 Cyber, a fine‑tuned version of GPT‑6 Astra that automatically identified, exploited and patched 948 root‑level Linux kernel vulnerabilities in a single run, at an estimated $1,280 per flaw—significantly cheaper than earlier GPT‑5.6 attempts. The system also demonstrated a dramatic drop in unauthorized attack attempts when safety instructions were applied.",
+      "why_it_matters": "The capability to discover and remediate critical software bugs at scale could reshape cybersecurity economics and reduce reliance on manual audits.",
+      "category": "Business",
+      "importance": 9.2,
+      "reading_time": "1 min",
+      "source": "https://openai.com/index/introducing-gpt-6-cyber/",
+      "source_name": "The Batch"
+    },
+    {
+      "headline": "MIT researchers use LLMs to edit neural‑network weights directly",
+      "summary": "MIT scientists prompted GPT‑6 Astra to interpret weight matrices, improve a car‑driving network, and generate new weights for simple Atari games, achieving performance gains without traditional gradient updates. The work demonstrates a new paradigm for model debugging and rapid prototyping using language models.",
+      "why_it_matters": "If LLMs can reliably edit model parameters, they become a powerful tool for accelerating AI development and reducing the computational cost of iterative training.",
+      "category": "Research",
+      "importance": 8.9,
+      "reading_time": "1 min",
+      "source": "https://rikiyat.github.io/blog/weight-space-programming/",
+      "source_name": "The Batch"
+    },
+    {
+      "headline": "Physical Superintelligence generates proof of Aaronson‑Ambainis conjecture",
+      "summary": "Startup Physical Superintelligence employed an internal Anthropic model to produce a complete formal proof of the Aaronson‑Ambainis quantum conjecture, later verified by the Lean proof assistant. The achievement marks a rare instance of AI autonomously solving a deep theoretical problem.",
+      "why_it_matters": "Demonstrates that large language models can contribute to frontier scientific research, potentially accelerating discovery across mathematics and physics.",
+      "category": "Research",
+      "importance": 8.7,
+      "reading_time": "1 min",
+      "source": "https://substack.com/redirect/10bed97e-3a91-4e44-b86b-14007775f3c9?j=eyJ1IjoiN25weXBvIn0.Mt4BEDDXrM3k_L3aoyx28a-LFasSvXPtP8RvEI7UqtU",
+      "source_name": "Import AI"
+    },
+    {
+      "headline": "Core Automation trains 32‑billion‑parameter MoE across global compute islands",
+      "summary": "Core Automation demonstrated training a 32 B‑parameter mixture‑of‑experts model using 320 GPUs split between data centers in the United States and Asia, synchronising model fragments every 50 steps with Distributed Shampoo. The approach shows large‑scale training is feasible without a single massive super‑computer.",
+      "why_it_matters": "Reduces the barrier to entry for building very large models, enabling more organisations to compete in the AI frontier.",
+      "category": "LLM",
+      "importance": 8.4,
+      "reading_time": "1 min",
+      "source": "https://substack.com/redirect/73d6213c-4268-4875-be70-e181720848ad?j=eyJ1IjoiN25weXBvIn0.Mt4BEDDXrM3k_L3aoyx28a-LFasSvXPtP8RvEI7UqtU",
+      "source_name": "Import AI"
+    },
+    {
+      "headline": "Meta Reality Labs introduces Tactus tactile‑pose glove",
+      "summary": "Meta unveiled Tactus, a thin textile glove equipped with capacitive tactile sensors and an IMU‑fused pose tracking system. The device captures high‑fidelity hand‑manipulation data, aimed at improving training datasets for embodied AI and robotics applications.",
+      "why_it_matters": "Rich tactile and pose data are essential for developing more capable robotic manipulation and human‑robot interaction systems.",
+      "category": "Robotics",
+      "importance": 8,
+      "reading_time": "1 min",
+      "source": "https://substack.com/redirect/a43989be-22d5-4564-be4f-fc543cd3fbc3?j=eyJ1IjoiN25weXBvIn0.Mt4BEDDXrM3k_L3aoyx28a-LFasSvXPtP8RvEI3UqtU",
+      "source_name": "Import AI"
+    },
+    {
+      "headline": "OpenWorker releases open‑source Agent Harness SDK",
+      "summary": "The OpenWorker project made its Agent Harness SDK publicly available, allowing developers to wrap any LLM with tool use, memory management and safety guardrails. The SDK streamlines creation of custom coding or file‑organising agents across model families.",
+      "why_it_matters": "Lowering technical barriers accelerates the deployment of safe, model‑agnostic AI agents in enterprise workflows.",
+      "category": "Open Source",
+      "importance": 7.8,
+      "reading_time": "1 min",
+      "source": "https://github.com/andrewyng/openworker/blob/main/harness/README.md",
+      "source_name": "The Batch"
+    },
+    {
+      "headline": "LLM‑powered search faces factual‑accuracy and cost hurdles",
+      "summary": "Analysts note that current LLM‑based search engines struggle with hallucinations and high inference costs, prompting a shift toward embedding‑free, retrieval‑augmented agents that combine traditional indexing with language models for more reliable document retrieval.",
+      "why_it_matters": "Reliability concerns limit the adoption of AI search in critical applications, steering research toward hybrid retrieval architectures.",
+      "category": "Regulation",
+      "importance": 7.5,
+      "reading_time": "1 min",
+      "source": "https://www.searchenginejournal.com/google-search-growth-slows-again-ai-mode/594862/",
+      "source_name": "The Batch"
+    },
+    {
+      "headline": "Tabular foundation models let agents predict on structured data",
+      "summary": "A new approach enables agents to ingest raw tabular datasets and example rows into a pretrained model, performing data‑science tasks without fine‑tuning. This extends LLM utility beyond text to business analytics and decision‑making.",
+      "why_it_matters": "Bridges the gap between language models and traditional data‑analysis workflows, opening enterprise use cases in finance, logistics and more.",
+      "category": "Agents",
+      "importance": 7.2,
+      "reading_time": "1 min",
+      "source": "https://info.deeplearning.ai/gpt-6-cyber-versus-linux-the-problem-with-llm-powered-search-llms-edit-model-weights-agentic-doc-retrieval-2?ecid=ACsprvtHh91pwXLx_5QOpC-lpNVdg96Ox7mjAZksc-fs1Hh6SsKDrH3MQopidd_vIq8eeF9id4JW",
+      "source_name": "The Batch"
+    }
+  ]
+}
